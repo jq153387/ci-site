@@ -8,6 +8,27 @@
       manifest.json provides metadata used when your web app is added to the
       homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
     -->
+    <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyC3kLrAASQ9465T1U5rP1fXoRAvU-donQE",
+        authDomain: "hidden-cosmos-186208.firebaseapp.com",
+        databaseURL: "https://hidden-cosmos-186208.firebaseio.com",
+        projectId: "hidden-cosmos-186208",
+        storageBucket: "hidden-cosmos-186208.appspot.com",
+        messagingSenderId: "159796828383"
+      };
+      firebase.initializeApp(config);
+      var msgRef = firebase.database().ref('/message')
+      function updatefirebase(){
+        var msg = document.getElementById("msg").value
+        console.log(msg)
+        msgRef.push({
+          message: msg
+        })
+      }
+    </script>
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
     <!--
@@ -26,6 +47,8 @@
       You need to enable JavaScript to run this app.
     </noscript>
     <div id="root"></div>
+    <input type="text" name="" value="" id="msg">
+    <input type="button" value="input" onclick="updatefirebase()">
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
