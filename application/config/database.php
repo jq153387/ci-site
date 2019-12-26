@@ -35,12 +35,12 @@
 */
 
 // The following values will probably need to be changed.
-$db['default']['username'] = "MD8vT55Ebb";
-$db['default']['password'] = "ovan48rgeP";
-$db['default']['database'] = "MD8vT55Ebb";
+$db['default']['username'] = "root";
+$db['default']['password'] = "root";
+$db['default']['database'] = "ciblog";
 
 // The following values can probably stay the same.
-$db['default']['hostname'] = "remotemysql.com";
+$db['default']['hostname'] = "mysql";
 $db['default']['dbdriver'] = "mysqli"; //Updated to latest driver.
 $db['default']['dbprefix'] = "";
 $db['default']['pconnect'] = TRUE;

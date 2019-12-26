@@ -10,7 +10,7 @@ class User extends CI_Model
 	function find($limit = null, $offset = 0)
 	{
 
-		$this->db->select('ug.user_id, u.*, GROUP_CONCAT(g.name) AS groups');
+		$this->db->select('ug.user_id, u.*, GROUP_CONCAT(g.name) AS ggroups');
 		$this->db->join('groups g', 'ug.group_id=g.id');
 		$this->db->join('users u', 'ug.user_id=u.id');
 		$this->db->group_by('ug.user_id');
