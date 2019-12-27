@@ -1,0 +1,56 @@
+ul.pageNav li{
+	display: inline;
+	clear:both;
+    padding: 3px;
+    font-family: georgia;
+}
+
+ul.pageNav li a{
+    color: #333;
+}
+
+ul.pageNav li.currentPage a {
+	color: #F00;	
+}
+#pager{
+	padding-top: 20px;
+	height: 30px;
+	clear: both;
+}
+
+#pager ul.pages {
+	display:block;
+	border:none;
+	text-transform:uppercase;
+	font-size:10px;
+	text-align: center;
+	padding-top: 10px;
+	padding-right: 0;
+	padding-bottom: 0;
+	padding-left: 0;
+}
+
+#pager ul.pages li {
+	list-style: none;
+	border: 1px solid #666;
+	text-decoration: none;
+	margin: 0 5px 0 0;
+	padding: 5px;
+	display: inline;
+}
+
+#pager ul.pages li:hover {
+	border: 1px solid #FFFFFF;
+}
+
+#pager ul.pages li.pgEmpty {
+	border: 1px solid #eee;
+	color: #CCC;
+}
+
+#pager ul.pages li.pgCurrent {
+	border: 1px solid #CCCCCC;
+	color: #000;
+	font-weight: 700;
+	background-color: #666;
+}

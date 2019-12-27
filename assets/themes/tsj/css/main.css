@@ -1,0 +1,124 @@
+body {
+	background-image: url(../images/main-lxe.jpg);
+	background-repeat: repeat-x;
+	background-position: 0px 0px;
+}
+#banner {
+}
+#content-wrapper {
+	width: 1003px;
+}
+aside {
+	width: 224px;
+	display: block;
+	float: left;
+}
+.nav_sub {
+	background-image: url(../images/s-lxe.gif);
+	background-repeat: repeat-y;
+	background-position: 0px 0px;
+
+}
+.nav_sub ul {
+	list-style-type: none;
+	padding-bottom: 25px;
+	background-image: url(../images/s-meun-dw.gif);
+	background-repeat: no-repeat;
+	background-position: 0px bottom;
+	padding-left: 27px;
+	padding-right: 27px;
+}
+
+.nav_sub li {
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #f1f1f1;
+
+
+}
+
+.nav_sub a:link, .nav_sub a:visited {
+	background-image: url(../images/s-menu-ao.gif);
+	background-repeat: no-repeat;
+	background-position: 4px 8px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #424242;
+	text-decoration: none;
+	display: block;
+	line-height: 27px;
+	letter-spacing: 1px;
+	height: 25px;
+	padding-left: 18px;
+}
+
+.nav_sub a:hover, .nav_sub a:active {
+	color: #000;
+	background-color: #f1f5f5;
+}
+.m-link {
+	list-style-type: none;
+}
+.m-link li {
+	float:left;
+	
+}
+.m-link li a {
+	background-image: url(../images/m-link.gif);
+	background-repeat: no-repeat;
+	width: 224px;
+	display: block;
+	float:left;	
+}
+.m-link li a:hover {
+	background-image: url(../images/m-link1.gif);
+}
+.m1 a{
+	height: 84px;
+
+}
+.m2 a{
+	background-position: 0 -84px;
+	height: 84px;
+}
+.m3 a{
+	background-position: 0 -168px;
+	height: 84px;
+
+}
+.m4 a{
+	background-position: 0 -252px;
+	height: 84px;
+}
+section {
+	float: right;
+	padding: 0 20px 0 8px;
+	width: 751px;
+}
+#title {
+	height: 28px;
+	padding-top: 8px;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #e5e5e5;
+	margin-bottom: 10px;
+}
+
+#title h1 {
+	font-size: 17px;
+	font-weight: bold;
+	color: #333333;
+	background-image: url(../images/title-sv.gif);
+	background-repeat: no-repeat;
+	background-position: 0 -2px;
+	padding-left: 13px;
+	letter-spacing: 2px;
+	float: left;
+}
+#title span {
+	float: left;
+	font-size: 11px;
+	color: #818181;
+	margin-left: 15px;
+	margin-top: 5px;
+}
