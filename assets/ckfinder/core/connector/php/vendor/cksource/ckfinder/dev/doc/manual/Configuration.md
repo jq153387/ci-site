@@ -6,7 +6,7 @@
 
 CKFinder comes with two configuration files:
  - `config.php` &ndash; A server-side configuration file, explained in this article.
- - `config.js` &ndash; An optional client-side configuration file, explained in the API documentation article about [setting JavaScript configuration](https://docs.ckeditor.com/ckfinder/ckfinder3/#!/api/CKFinder.Config).
+ - `config.js` &ndash; An optional client-side configuration file, explained in the API documentation article about [setting JavaScript configuration](https://ckeditor.com/docs/ckfinder/ckfinder3/#!/api/CKFinder.Config).
 
 The following options can be set in the `config.php` file:
 
@@ -357,7 +357,7 @@ Serving files this way has the following advantages:
 The disadvantage of this approach is that all links to files will be dependent on the CKFinder connector, so if you decide to remove CKFinder one day, the links will simply stop working.
 
 <h3>Supported Backends</h3>
-The CKFinder connector uses a [file system abstraction layer](http://flysystem.thephpleague.com) which allows to use many different file systems transparently.
+The CKFinder connector uses a [file system abstraction layer](https://flysystem.thephpleague.com) which allows to use many different file systems transparently.
 Below you can find a list of supported backends with their configuration options.
 
 @subsubsection configuration_options_backends_local Local File System
@@ -436,12 +436,12 @@ Option Name            | Type   | Description
 `name`                 | String | The unique name of the backend.
 `adapter`              | String | The type of adapter used by this backend &mdash; `s3` for Amazon S3.
 `bucket`               | String | Bucket name.
-`region`               | String | Region identifier. For list of regions and their endpoints please refer to http://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region
+`region`               | String | Region identifier. For list of regions and their endpoints please refer to https://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region
 `key`                  | String | Access key.
 `secret`               | String | Secret value.
-`signature` @optional  | String | Signature version for region (by default set to `v4`). For list of regions and supported signature versions please refer to http://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region.
+`signature` @optional  | String | Signature version for region (by default set to `v4`). For list of regions and supported signature versions please refer to https://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region.
 `visibility` @optional | String | The visibility of the stored files. The default is `private`, which means that files uploaded to S3 will not be accessible directly (using the file URL). To enable direct access set this value to `public`.
-`baseUrl` @optional    | String | The base URL used for direct access to CKFinder files on Amazon S3 (if files are publicly visible, you can find a common prefix for them, for example `http://s3-eu-west-1.amazonaws.com/bucket`).
+`baseUrl` @optional    | String | The base URL used for direct access to CKFinder files on Amazon S3 (if files are publicly visible, you can find a common prefix for them, for example `https://s3-eu-west-1.amazonaws.com/bucket`).
 `root` @optional       | String | The directory path with CKFinder users' files. This directory must exist on the server.
 `useProxyCommand` @optional  @labelSince{3.1.0} | Boolean | Whether the links to files stored on this backend should be pointing to the @ref command_proxy command.
 
@@ -460,9 +460,9 @@ $config['backends'][] = array(
 );
 ~~~
 
-To create AWS access key please refer to [Amazon Web Services documentation](http://docs.aws.amazon.com/general/latest/gr/getting-aws-sec-creds.html).
+To create AWS access key please refer to [Amazon Web Services documentation](https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html).
 
-**Note:** Please follow [IAM best practices](http://docs.aws.amazon.com/IAM/latest/UserGuide/IAMBestPractices.html#create-iam-users) and do not use your AWS root access key.
+**Note:** Please follow [IAM best practices](https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html#create-iam-users) and do not use your AWS root access key.
 
 
 @subsubsection configuration_options_backends_ftp FTP
@@ -649,7 +649,7 @@ $config['disallowUnsafeCharacters'] = true;
 \since CKFinder 3.2.0
 
 Enables [CSRF](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_%28CSRF%29) protection in the connector. The default
-CSRF protection mechanism is based on [double submit cookies](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_%28CSRF%29_Prevention_Cheat_Sheet#Double_Submit_Cookies).
+CSRF protection mechanism is based on [double submit cookies](https://www.owasp.org/index.php/Cross-Site_Request_Forgery_%28CSRF%29_Prevention_Cheat_Sheet#Double_Submit_Cookie).
 
 <h4>Example</h4>
 
@@ -727,11 +727,9 @@ In order to upload an `.xsl` file that contains HTML code at the beginning of th
 $config['htmlExtensions'] = array('html', 'htm', 'xml', 'js', 'xsl');
 ~~~
 
-This setting secures your server against the Universal XSS / MIME Type detection attack.
+Please note that this feature performs only a very basic set of checks to detect HTML-like data in the first 1kB of the file contents to protect users e.g. against unintentional uploading of files with HTML content and with a wrong extension.
 
-**Note**: Malicious files that contain HTML-like data may use various UTF encodings. To validate all possible encodings please
-make sure that the `mbstring` PHP extension is enabled on your server.
-
+**Note**: Malicious files that contain HTML-like data may use various UTF encodings. To validate all possible encodings please make sure that the `mbstring` PHP extension is enabled on your server.
 
 @subsection configuration_options_images images
 
@@ -893,16 +891,15 @@ Option Name | Type | Description
 `backend` | String | The name of the @ref configuration_options_backends "backend" where this resource type should point to.
 `directory` @optional | String | The path to the backend subfolder where the resource type should point exactly.
 `maxSize` @optional | String | The maximum size of the uploaded image defined in bytes. A shorthand notation is also supported: G, M, K (case insensitive). `1M` equals 1048576 bytes (one Megabyte), `1K` equals 1024 bytes (one Kilobyte), `1G` equals 1 Gigabyte.
-`allowedExtensions` | String | The file extensions you wish to be allowed for upload with CKFinder.
-`deniedExtensions` @optional | String | The file extensions you do not wish to be uploaded with CKFinder. Shall only be set if `allowedExtensions` is left empty.
+`allowedExtensions` | String | The file extensions you wish to be allowed for upload with CKFinder. `NO_EXT` value can be used for files without extension.
+`deniedExtensions` @optional | String | The file extensions you do not wish to be uploaded with CKFinder. Shall only be set if `allowedExtensions` is left empty. `NO_EXT` value can be used for files without extension.
 `lazyLoad` @optional | Boolean | If set to `true`, the `Init` command will not check if the resource type contains child folders. This option is especially useful for remote backends, as the `Init` command will be executed faster, and therefore CKFinder will start faster, too. It is recommended to set it to `true` for remote backends.
 
 **Important**: It is recommended to always use the `allowedExtensions` setting, in favor of `deniedExtensions`. If you leave `allowedExtensions` empty and add an extension to the `deniedExtensions` list, for example `pdf`, the settings will allow the upload of all other files except the files with the `pdf` extension (e.g. `.php` or `.exe` files).
 
-
 <h4>Example 1</h4>
 
-A simple resource type definition where the `label` was set to a French equivalent of `Files`. The `name` (machine-name) set to `Files` can be used in places like @ref configuration_options_defaultResourceTypes or when [integrating CKFinder with CKEditor](https://docs.ckeditor.com/ckfinder/ckfinder3/#!/guide/dev_ckeditor).
+A simple resource type definition where the `label` was set to a French equivalent of `Files`. The `name` (machine-name) set to `Files` can be used in places like @ref configuration_options_defaultResourceTypes or when [integrating CKFinder with CKEditor](https://ckeditor.com/docs/ckfinder/ckfinder3/#!/guide/dev_ckeditor).
 
 ~~~
 $config['resourceTypes'][] = array(
@@ -911,7 +908,7 @@ $config['resourceTypes'][] = array(
     'backend' => 'default',
     'directory' => '/files/',
     'maxSize' => '8M',
-    'allowedExtensions' => 'doc,gif,jpg,pdf,png,zip'
+    'allowedExtensions' => 'doc,gif,jpg,pdf,png,zip,NO_EXT'
 );
 ~~~
 
@@ -939,7 +936,7 @@ $config['resourceTypes'][] = array(
     'backend' => 'default',
     'directory' => '/files/',
     'maxSize' => '8M',
-    'allowedExtensions' => 'doc,gif,jpg,pdf,png,zip'
+    'allowedExtensions' => 'doc,gif,jpg,pdf,png,zip,NO_EXT'
 );
 
 ~~~
@@ -1037,7 +1034,7 @@ $config['sessionWriteClose'] = true;
 \since CKFinder 3.1.0
 
 An **absolute path** to a writable directory on the web server for temporary files used by CKFinder.
-By default it points to `sys_temp_dir` returned by [sys_get_temp_dir()](http://php.net/manual/pl/function.sys-get-temp-dir.php).
+By default it points to `sys_temp_dir` returned by [sys_get_temp_dir()](https://secure.php.net/manual/pl/function.sys-get-temp-dir.php).
 
 **Note:** The system temporary directory may not be accessible from the PHP level on some IIS servers. Using this option you can
 configure CKFinder to use any other writable directory to store temporary files.

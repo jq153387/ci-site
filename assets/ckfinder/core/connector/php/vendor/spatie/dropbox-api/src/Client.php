@@ -4,6 +4,7 @@ namespace Spatie\Dropbox;
 
 use Exception;
 use GuzzleHttp\Psr7;
+use GuzzleHttp\Psr7\PumpStream;
 use GuzzleHttp\Psr7\StreamWrapper;
 use Psr\Http\Message\StreamInterface;
 use GuzzleHttp\Client as GuzzleClient;
@@ -11,6 +12,7 @@ use Psr\Http\Message\ResponseInterface;
 use GuzzleHttp\Exception\ClientException;
 use Spatie\Dropbox\Exceptions\BadRequest;
 use GuzzleHttp\Exception\RequestException;
+use GrahamCampbell\GuzzleFactory\GuzzleFactory;
 
 class Client
 {
@@ -41,20 +43,16 @@ class Client
     protected $maxUploadChunkRetries;
 
     /**
-     * @param string            $accessToken
+     * @param string $accessToken
      * @param GuzzleClient|null $client
-     * @param int               $maxChunkSize Set max chunk size per request (determines when to switch from "one shot upload" to upload session and defines chunk size for uploads via session).
-     * @param int               $maxUploadChunkRetries How many times to retry an upload session start or append after RequestException.
+     * @param int $maxChunkSize Set max chunk size per request (determines when to switch from "one shot upload" to upload session and defines chunk size for uploads via session).
+     * @param int $maxUploadChunkRetries How many times to retry an upload session start or append after RequestException.
      */
     public function __construct(string $accessToken, GuzzleClient $client = null, int $maxChunkSize = self::MAX_CHUNK_SIZE, int $maxUploadChunkRetries = 0)
     {
         $this->accessToken = $accessToken;
 
-        $this->client = $client ?? new GuzzleClient([
-                'headers' => [
-                    'Authorization' => "Bearer {$this->accessToken}",
-                ],
-            ]);
+        $this->client = $client ?? new GuzzleClient(['handler' => GuzzleFactory::handler()]);
 
         $this->maxChunkSize = ($maxChunkSize < self::MAX_CHUNK_SIZE ? ($maxChunkSize > 1 ? $maxChunkSize : 1) : self::MAX_CHUNK_SIZE);
         $this->maxUploadChunkRetries = $maxUploadChunkRetries;
@@ -108,8 +106,11 @@ class Client
     {
         $parameters = [
             'path' => $this->normalizePath($path),
-            'settings' => $settings,
         ];
+
+        if (count($settings)) {
+            $parameters = array_merge(compact('settings'), $parameters);
+        }
 
         return $this->rpcEndpointRequest('sharing/create_shared_link_with_settings', $parameters);
     }
@@ -358,10 +359,10 @@ class Client
      * The chunk size will affect directly the memory usage, so be careful.
      * Large chunks tends to speed up the upload, while smaller optimizes memory usage.
      *
-     * @param string          $path
+     * @param string $path
      * @param string|resource $contents
-     * @param string          $mode
-     * @param int             $chunkSize
+     * @param string $mode
+     * @param int $chunkSize
      *
      * @return array
      */
@@ -371,7 +372,7 @@ class Client
             $chunkSize = $this->maxChunkSize;
         }
 
-        $stream = Psr7\stream_for($contents);
+        $stream = $this->getStream($contents);
 
         $cursor = $this->uploadChunk(self::UPLOAD_SESSION_START, $stream, $chunkSize, null);
 
@@ -383,9 +384,9 @@ class Client
     }
 
     /**
-     * @param int         $type
+     * @param int $type
      * @param Psr7\Stream $stream
-     * @param int         $chunkSize
+     * @param int $chunkSize
      * @param \Spatie\Dropbox\UploadSessionCursor|null $cursor
      * @return \Spatie\Dropbox\UploadSessionCursor
      * @throws Exception
@@ -430,7 +431,7 @@ class Client
      * @link https://www.dropbox.com/developers/documentation/http/documentation#files-upload_session-start
      *
      * @param string|StreamInterface $contents
-     * @param bool   $close
+     * @param bool $close
      *
      * @return UploadSessionCursor
      */
@@ -455,7 +456,7 @@ class Client
      *
      * @param string|StreamInterface $contents
      * @param UploadSessionCursor $cursor
-     * @param bool                $close
+     * @param bool $close
      *
      * @return \Spatie\Dropbox\UploadSessionCursor
      */
@@ -477,12 +478,12 @@ class Client
      *
      * @link https://www.dropbox.com/developers/documentation/http/documentation#files-upload_session-finish
      *
-     * @param string|StreamInterface              $contents
+     * @param string|StreamInterface $contents
      * @param \Spatie\Dropbox\UploadSessionCursor $cursor
-     * @param string                              $path
-     * @param string|array                        $mode
-     * @param bool                                $autorename
-     * @param bool                                $mute
+     * @param string $path
+     * @param string|array $mode
+     * @param bool $autorename
+     * @param bool $mute
      *
      * @return array
      */
@@ -528,14 +529,22 @@ class Client
 
     protected function normalizePath(string $path): string
     {
-        if (preg_match("/^id:.*|^rev:.*|^(ns:[0-9]+(\/.*)?)/",  $path) === 1)
-        {
+        if (preg_match("/^id:.*|^rev:.*|^(ns:[0-9]+(\/.*)?)/", $path) === 1) {
             return $path;
         }
-        
+
         $path = trim($path, '/');
 
         return ($path === '') ? '' : '/'.$path;
+    }
+
+    protected function getEndpointUrl(string $subdomain, string $endpoint): string
+    {
+        if (count($parts = explode('::', $endpoint)) === 2) {
+            [$subdomain, $endpoint] = $parts;
+        }
+
+        return "https://{$subdomain}.dropboxapi.com/2/{$endpoint}";
     }
 
     /**
@@ -556,8 +565,8 @@ class Client
         }
 
         try {
-            $response = $this->client->post("https://content.dropboxapi.com/2/{$endpoint}", [
-                'headers' => $headers,
+            $response = $this->client->post($this->getEndpointUrl('content', $endpoint), [
+                'headers' => $this->getHeaders($headers),
                 'body' => $body,
             ]);
         } catch (ClientException $exception) {
@@ -570,13 +579,13 @@ class Client
     public function rpcEndpointRequest(string $endpoint, array $parameters = null): array
     {
         try {
-            $options = [];
+            $options = ['headers' => $this->getHeaders()];
 
             if ($parameters) {
                 $options['json'] = $parameters;
             }
 
-            $response = $this->client->post("https://api.dropboxapi.com/2/{$endpoint}", $options);
+            $response = $this->client->post($this->getEndpointUrl('api', $endpoint), $options);
         } catch (ClientException $exception) {
             throw $this->determineException($exception);
         }
@@ -593,5 +602,55 @@ class Client
         }
 
         return $exception;
+    }
+
+    /**
+     * @param $contents
+     *
+     * @return \GuzzleHttp\Psr7\PumpStream|\GuzzleHttp\Psr7\Stream
+     */
+    protected function getStream($contents)
+    {
+        if ($this->isPipe($contents)) {
+            /* @var resource $contents */
+            return new PumpStream(function ($length) use ($contents) {
+                $data = fread($contents, $length);
+                if (strlen($data) === 0) {
+                    return false;
+                }
+
+                return $data;
+            });
+        }
+
+        return Psr7\stream_for($contents);
+    }
+
+    /**
+     * Get the access token.
+     */
+    public function getAccessToken(): string
+    {
+        return $this->accessToken;
+    }
+
+    /**
+     * Set the access token.
+     */
+    public function setAccessToken(string $accessToken): self
+    {
+        $this->accessToken = $accessToken;
+
+        return $this;
+    }
+
+    /**
+     * Get the HTTP headers.
+     */
+    protected function getHeaders(array $headers = []): array
+    {
+        return array_merge([
+            'Authorization' => "Bearer {$this->accessToken}",
+        ], $headers);
     }
 }

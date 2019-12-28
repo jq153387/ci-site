@@ -2,7 +2,7 @@
 
 \tableofcontents
 
-If you did not find the answer you are looking for, send us your question: http://cksource.com/contact
+If you did not find the answer you are looking for, send us your question: https://cksource.com/contact
 
 @section howto_folder_instance Different Folder per Instance
 
@@ -232,7 +232,7 @@ Get basic information about the `foo.png` file located in the `sub1` directory o
 ~~~
 $workingFolder->omitResponseInfo();
 ~~~
-        Another solution is to return any other type of [Response](http://symfony.com/doc/current/components/http_foundation/introduction.html#response) object directly from the `execute` method.
+        Another solution is to return any other type of [Response](https://symfony.com/doc/current/components/http_foundation/introduction.html#response) object directly from the `execute` method.
 
         </td>
     </tr>
@@ -308,17 +308,17 @@ $config['resourceTypes'][] = array(
 @section howto_php_session_performance Avoiding Performance Issues Related to PHP Sessions
 
 By default, the PHP session mechanism uses regular files to save the session data. When a request
-is sent to a PHP script that starts the session with [session_start()](http://php.net/manual/en/function.session-start.php),
+is sent to a PHP script that starts the session with [session_start()](https://secure.php.net/manual/en/function.session-start.php),
 it locks the session file. That means that any concurrent requests that use the same session will remain pending
 until the processing required by the previous request is finished.
 
 This may be particularly undesirable when one of the requests is time-consuming, and blocks a bunch of requests that are processed relatively fast. To avoid this issue, the PHP connector closes the write access to the session with 
-[session_write_close()](http://php.net/manual/en/function.session-write-close.php) as soon as possible,
+[session_write_close()](https://secure.php.net/manual/en/function.session-write-close.php) as soon as possible,
 so requests can be processed simultaneously (see @ref configuration_options_sessionWriteClose).
 
 PHP sessions may also cause issues with caching of the content in the browser, which may slow down the application and degrade the user experience.
 
-The cache headers added by the session depend on the [session_cache_limiter()](http://php.net/manual/en/function.session-cache-limiter.php) configuration. The `session_cache_limiter()` function needs to be called before `session_start()`.
+The cache headers added by the session depend on the [session_cache_limiter()](https://secure.php.net/manual/en/function.session-cache-limiter.php) configuration. The `session_cache_limiter()` function needs to be called before `session_start()`.
 
 As CKFinder connector does not control the moment when the session starts, it needs to be configured in the main application.
 The automatic sending of cache headers can be turned off by providing an empty string as a parameter of the `session_cache_limiter()` function, as presented below:
@@ -326,6 +326,18 @@ The automatic sending of cache headers can be turned off by providing an empty s
 ~~~
 session_cache_limiter('');
 ~~~
+
+
+@section howto_caching_layer Adding a Caching Layer in the Backend Adapter
+
+Adding a caching layer to any backend adapter type is a fairly simple task. The CKFinder PHP connector uses
+the [Flysystem](https://flysystem.thephpleague.com/) abstraction layer under the hood,
+so there are [quite a few](https://flysystem.thephpleague.com/docs/advanced/caching/#persistent-caching)
+ready-to-use caching adapters available that can be used to decorate the regular backend adapter.
+
+Please have a look at the following [ticket on GitHub](https://github.com/ckfinder/ckfinder/issues/365) to read about
+a sample implementation of Redis cache in the S3 backend.
+
 
 @section howto_custom_storage Adding Support for Custom Storage
 
@@ -362,11 +374,11 @@ CREATE TABLE files (
 );
 ~~~
 
-## Implementing a Custom Flysystem Adapter {#howto_custom_storage_flysystem_adapter}
+@subsection howto_custom_storage_flysystem_adapter Implementing a Custom Flysystem Adapter
 
-The CKFinder 3 PHP server-side connector uses [Flysystem](http://flysystem.thephpleague.com/) as a file system abstraction layer.
+The CKFinder 3 PHP server-side connector uses [Flysystem](https://flysystem.thephpleague.com/docs/) as a file system abstraction layer.
 Flysystem offers a very convenient way for communication with various file systems using a common API, and allows
-to plug adapters that can be used to communicate with any kind of custom storage. To get familiar with the concept of Flysystem adapters, have a look at the ["Creating an adapter"](http://flysystem.thephpleague.com/creating-an-adapter/) article in the official Flysystem documentation.
+to plug adapters that can be used to communicate with any kind of custom storage. To get familiar with the concept of Flysystem adapters, have a look at the ["Creating an adapter"](https://flysystem.thephpleague.com/docs/advanced/creating-an-adapter/) article in the official Flysystem documentation.
 
 The first step in adding a custom storage in the CKFinder 3 PHP connector is creating an implementation
 of [League\\Flysystem\\AdapterInterface](https://github.com/thephpleague/flysystem/blob/master/src/AdapterInterface.php).
@@ -375,25 +387,25 @@ or deleting a file.
 
 Have a look at a custom implementation of [League\\Flysystem\\AdapterInterface](https://github.com/thephpleague/flysystem/blob/master/src/AdapterInterface.php)
 required to save files in a database table with the assumed schema. The [PDOAdapter](https://github.com/ckfinder/ckfinder-plugin-database-adapter-php/blob/master/src/DatabaseAdapter/PDOAdapter.php)
-class uses the [PDO](http://php.net/manual/en/book.pdo.php) PHP extension, which defines an interface for accessing many database systems in PHP.
+class uses the [PDO](https://secure.php.net/manual/en/book.pdo.php) PHP extension, which defines an interface for accessing many database systems in PHP.
 The constructor of the `PDOAdapter` class takes two parameters: a valid `PDO` object and a table name where files should be stored.
 The instantiation of the `PDOAdapter` class is presented below.
 
 **MySQL**
 ~~~
-// http://php.net/manual/en/ref.pdo-mysql.connection.php
+// https://secure.php.net/manual/en/ref.pdo-mysql.connection.php
 $pdo = new PDO('mysql:host=hostname;dbname=database_name', 'username', 'password');
 $adapter = new PDOAdapter($pdo, 'files');
 ~~~
 
 **SQLite**
 ~~~
-// http://php.net/manual/en/ref.pdo-sqlite.connection.php
+// https://secure.php.net/manual/en/ref.pdo-sqlite.connection.php
 $pdo = new PDO('sqlite:/absolute/path/to/database.sqlite');
 $adapter = new PDOAdapter($pdo, 'files');
 ~~~
 
-## Registering a Custom Adapter with a Plugin {#howto_custom_storage_plugin}
+@subsection howto_custom_storage_plugin Registering a Custom Adapter with a Plugin
 
 With the implementation of [League\\Flysystem\\AdapterInterface](https://github.com/thephpleague/flysystem/blob/master/src/AdapterInterface.php) ready, it is now
 time to tell the CKFinder connector to use it. The most convenient way is by creating a connector plugin (see @ref plugins_development) to make it possible to expose plugin options and configure them in the connector [configuration](@ref configuration). The example below presents a connector plugin that registers the `PDOAdapter` implemented in the previous step.
@@ -437,3 +449,50 @@ class DatabaseAdapter implements PluginInterface
 ~~~
 
 See the [DatabaseAdapter plugin sample](https://github.com/ckfinder/ckfinder-plugin-database-adapter-php) for the complete source code implementing this functionality.
+
+
+@section securing_public_folder Securing a Publicly Accessible Folder
+
+When integrating CKFinder, you will often want to give users access to uploaded files, so they can insert images or links to files into the edited content. This can be done in two ways:
+
+* You can configure your CKFinder to serve all files through the connector using the @ref command_proxy command.
+* You can make the folder publicly accessible, so all the files are served through the web server.
+
+If you rely on your web server to serve the files uploaded with CKFinder, you should take additional steps to make sure the files are served in a secure way.
+
+Let us assume that you have configured your CKFinder to allow uploading of `avi` files. Even if the `avi` file is then served with a valid `Content-Type: video/x-msvideo` header, some browsers may ignore this information and perform additional checks on the raw file contents. If any HTML-like data is detected in the file content, the browser may decide to ignore information about the content type and handle the served content as if it was a regular web page. This behavior is called <i>[content sniffing](https://en.wikipedia.org/wiki/Content_sniffing)</i> (also known as _media type sniffing_ or _MIME sniffing_), and in some circumstances it may lead to security issues (for example, it may open door for [XSS attacks](https://www.owasp.org/index.php/Cross-site_Scripting_(XSS))). 
+
+To avoid content sniffing, you should make sure that your server adds the `X-Content-Type-Options: nosniff` header to all HTTP responses when serving files from the publicly available folder. The `X-Content-Type-Options` response HTTP header is a marker used by the server to indicate that the MIME type set by the `Content-Type` header should not be changed and should be followed. As a result, the browser does not perform any content sniffing on the received content.
+
+**Apache**
+
+If you use the Apache web server, you can add custom HTTP response headers using <code>[mod_headers](https://httpd.apache.org/docs/current/mod/mod_headers.html)</code>. Make sure the `mod_headers` module is enabled, and create (or modify) the following `.htaccess` file in the root of the publicly accessible folder (for example `userfiles/.htaccess`):
+
+```
+Header set X-Content-Type-Options "nosniff"
+```
+
+**Nginx**
+
+If you use Nginx, custom HTTP response headers can be defined per location:
+
+```
+location /userfiles {
+    add_header X-Content-Type-Options nosniff;
+}
+```
+
+**Microsoft IIS**
+
+For Microsoft IIS servers, you can enable the `X-Content-Type-Options` header in your `web.config` file:
+
+```xml
+<system.webServer>
+    <httpProtocol>
+      <customHeaders>
+        <remove name="X-Content-Type-Options"/>
+        <add name="X-Content-Type-Options" value="nosniff"/>
+      </customHeaders>
+    </httpProtocol>
+</system.webServer>
+```

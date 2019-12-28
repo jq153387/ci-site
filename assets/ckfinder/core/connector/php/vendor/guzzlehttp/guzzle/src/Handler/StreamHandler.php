@@ -33,7 +33,7 @@ class StreamHandler
             usleep($options['delay'] * 1000);
         }
 
-        $startTime = isset($options['on_stats']) ? microtime(true) : null;
+        $startTime = isset($options['on_stats']) ? \GuzzleHttp\_current_time() : null;
 
         try {
             // Does not support the expect header.
@@ -42,7 +42,7 @@ class StreamHandler
             // Append a content-length header if body size is zero to match
             // cURL's behavior.
             if (0 === $request->getBody()->getSize()) {
-                $request = $request->withHeader('Content-Length', 0);
+                $request = $request->withHeader('Content-Length', '0');
             }
 
             return $this->createResponse(
@@ -82,7 +82,7 @@ class StreamHandler
             $stats = new TransferStats(
                 $request,
                 $response,
-                microtime(true) - $startTime,
+                \GuzzleHttp\_current_time() - $startTime,
                 $error,
                 []
             );

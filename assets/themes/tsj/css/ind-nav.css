@@ -1,0 +1,104 @@
+@charset "utf-8";
+.tabs{
+	list-style:none;
+	height: 49px;
+	padding: 0 0 0 19px;
+}
+.tabs li.active  {
+	background-image: url(../images/ind-hover.gif);
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+	line-height: 55px;
+}
+.tabs li.active a {
+
+	text-shadow:0px 1px 1px #000000;
+	color: #FFF;
+}
+.tabs li{
+	width: 107px;
+	float: left;
+	text-align: center;
+	display: block;
+	height: 49px;
+	line-height: 68px;
+}
+.tabs li a:hover{
+	background-image: url(../images/ind-hover.gif);
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+	line-height: 55px;
+	text-shadow:0px 1px 1px #000000;
+	color: #FFF;
+
+}
+.tabs li a{
+	cursor: default;
+	display: block;
+	height: 49px;
+	text-decoration: none;
+	font-weight: bold;
+	color: #4d4c4c;
+	font-size: 15px;
+	letter-spacing: 0.5px;
+}.tab_container {
+	position: relative;
+	height: 36px;
+}
+.tab_container ul {
+	list-style-type: none;
+}
+.tab_container ul li {
+	float: left;
+	display: block;
+	margin-right: 30px;
+	height: 36px;
+	line-height: 36px;
+}
+.tab_container ul li a {
+	text-decoration: none;
+	color: #e0e0e0;
+	font-size: 12px;
+}
+.tab_container ul li a:hover {
+	color: #FFFFFF;
+}
+.tab_container div {
+
+}
+#tab1 {
+	position: absolute;
+	left: 45px;
+}
+#tab2 {
+	position: absolute;
+	left: 60px;
+}
+#tab3 {
+	position: absolute;
+	left: 120px;
+}
+#tab4 {
+	position: absolute;
+	left: 360px;
+}
+#tab5 {
+	position: absolute;
+	left: 380px;
+}
+#tab6 {
+	position: absolute;
+	left: 445px;
+}
+#tab7 {
+	position: absolute;
+	left: 580px;
+}
+#tab8 {
+	position: absolute;
+	right: 130px;
+}
+#tab9 {
+	position: absolute;
+	right: 0px;
+}
