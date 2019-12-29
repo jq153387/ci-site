@@ -33,7 +33,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
       <div class="fb-share">
         <a name="fb_share" type="button" share_url="http://www.tsj-diamond.com/" href="http://www.facebook.com/sharer.php">分享TSJ鑽石工場</a>
       </div>
-      <div id="iflash2"><img src="images/ind_12.gif"></div>
+      <div id="iflash2"><img src="<?php echo $base_assets_url; ?>images/ind_12.gif"></div>
       <script type="text/javascript">
         var flashvars = {};
         var params = {};
@@ -55,6 +55,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
   </div>
   <?php echo $footer; ?>
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-  <script src="<?php echo $base_assets_url; ?>jquery/jquery.js"></script>
+  <script src="<?php echo $base_assets_url; ?>js/jquery.js"></script>
 
 </html>
