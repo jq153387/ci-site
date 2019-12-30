@@ -1,5 +1,6 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
+print_r($content);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,7 +29,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <body>
   <div id="outer-wrapper">
     <?php echo $header; ?>
-    <?php echo $nav; ?>
     <div id="flash-wrapper">
       <div class="fb-share">
         <a name="fb_share" type="button" share_url="http://www.tsj-diamond.com/" href="http://www.facebook.com/sharer.php">分享TSJ鑽石工場</a>
