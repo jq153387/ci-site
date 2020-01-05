@@ -1,6 +1,5 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-print_r($content);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,9 +12,12 @@ print_r($content);
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
   <title><?php echo $page_title ?> - CI Blog</title>
+  <?php //if(!empty($home_page)):?>
   <link href="<?php echo $base_assets_url; ?>css/ind.css" rel="stylesheet" type="text/css">
+  <?php //else:?>
   <!-- Main Css -->
-  <link href="<?php echo $base_assets_url; ?>css/style.css" rel="stylesheet" type="text/css">
+  <!-- <link href="<?php //echo $base_assets_url; ?>css/style.css" rel="stylesheet" type="text/css"> -->
+  <?php //endif;?>
   <script src="<?php echo $base_assets_url; ?>js/swfobject.js" type="text/javascript"></script>
   <script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -29,6 +31,7 @@ print_r($content);
 <body>
   <div id="outer-wrapper">
     <?php echo $header; ?>
+    <?php echo $nav; ?>
     <div id="flash-wrapper">
       <div class="fb-share">
         <a name="fb_share" type="button" share_url="http://www.tsj-diamond.com/" href="http://www.facebook.com/sharer.php">分享TSJ鑽石工場</a>
