@@ -29,10 +29,12 @@
                                 <td><?php echo $user['ggroups'] ?></td>
                                 <td><?php echo $user_status[$user['active']] ?></td>
                                 <td>
-                                    <?php if (!in_array('admin', explode(',', $user['ggroups']))) : ?>
-                                        <a href="<?php echo site_url('admin/users/edit/' . $user['id']) ?>"><span class="badge bg-green">edit</span></a>
-                                        <a href="<?php echo site_url('admin/users/delete/' . $user['id']) ?>" onclick="return confirm('Are you sure?')"><span class="badge bg-red">delete</span></a>
-                                    <?php endif; ?>
+                                    <?php //if (!in_array('admin', explode(',', $user['ggroups']))) : 
+                                    ?>
+                                    <a href="<?php echo site_url('admin/users/edit/' . $user['id']) ?>"><span class="badge bg-green">edit</span></a>
+                                    <a href="<?php echo site_url('admin/users/delete/' . $user['id']) ?>" onclick="return confirm('Are you sure?')"><span class="badge bg-red">delete</span></a>
+                                    <?php //endif; 
+                                    ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

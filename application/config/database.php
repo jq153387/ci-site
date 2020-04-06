@@ -36,11 +36,11 @@
 
 // The following values will probably need to be changed.
 $db['default']['username'] = "root";
-$db['default']['password'] = "root";
-$db['default']['database'] = "ciblog";
+$db['default']['password'] = "";
+$db['default']['database'] = "cisite";
 
 // The following values can probably stay the same.
-$db['default']['hostname'] = "mysql";
+$db['default']['hostname'] = "localhost";
 $db['default']['dbdriver'] = "mysqli"; //Updated to latest driver.
 $db['default']['dbprefix'] = "";
 $db['default']['pconnect'] = TRUE;
