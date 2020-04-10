@@ -11,7 +11,7 @@
                     <?php echo $this->session->flashdata('message'); ?>
                     <?php echo message_box(validation_errors(), 'danger'); ?>
                     <div class="form-group">
-                        <label for="username">Username</label>
+                        <label for="username">使用者名稱</label>
                         <input type="text" name="username" class="form-control" id="username" placeholder="Username" value="<?php echo set_value('username') ?>">
                     </div>
                     <div class="form-group">
@@ -19,11 +19,11 @@
                         <input type="text" name="email" class="form-control" id="username" placeholder="Username" value="<?php echo set_value('email') ?>">
                     </div>
                     <div class="form-group">
-                        <label for="username">New Password</label>
+                        <label for="username">新密碼</label>
                         <input type="password" name="password" class="form-control" id="username" placeholder="New Password" value="">
                     </div>
                     <div class="form-group">
-                        <label for="username">Confirm Password</label>
+                        <label for="username">確認密碼</label>
                         <input type="password" name="confirm_password" class="form-control" id="username" placeholder="Confirm Password" value="">
                     </div>
                     <div class="form-group">
@@ -35,11 +35,11 @@
                         <input type="text" name="last_name" class="form-control" id="username" placeholder="Last name" value="<?php echo set_value('last_name') ?>">
                     </div>
                     <div class="form-group">
-                        <label for="username">Company</label>
+                        <label for="username">公司</label>
                         <input type="text" name="company" class="form-control" id="username" placeholder="Company" value="<?php echo set_value('company') ?>">
                     </div>
                     <div class="form-group">
-                        <label for="username">Phone</label>
+                        <label for="username">手機</label>
                         <input type="text" name="phone" class="form-control" id="username" placeholder="Phone" value="<?php echo set_value('phone') ?>">
                     </div>
                     <div class="form-group">
@@ -51,8 +51,8 @@
                 </div><!-- /.box-body -->
 
                 <div class="box-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                    <button type="button" class="btn btn-default" onclick="javascript:history.back()">Back</button>
+                    <button type="submit" class="btn btn-primary">確認</button>
+                    <button type="button" class="btn btn-default" onclick="javascript:history.back()">取消</button>
                 </div>
             </form>
         </div><!-- /.box -->

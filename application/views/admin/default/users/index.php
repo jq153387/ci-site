@@ -2,7 +2,7 @@
     <div class="col-md-12">
         <div class="box">
             <div class="box-header">
-                <h3 class="box-title">Users</h3>
+                <h3 class="box-title">使用者</h3>
             </div><!-- /.box-header -->
             <div class="box-body">
                 <?php echo $this->session->flashdata('message'); ?>
@@ -10,13 +10,13 @@
                 <table class="table table-bordered">
                     <tr>
                         <th style="width: 10px">#</th>
-                        <th>Username</th>
+                        <th>使用者名稱</th>
                         <th>Email</th>
                         <th>First Name</th>
                         <th>Last Name</th>
-                        <th>Groups</th>
-                        <th>Status</th>
-                        <th style="width: 100px">Action</th>
+                        <th>群組</th>
+                        <th>狀態</th>
+                        <th style="width: 100px">編輯</th>
                     </tr>
                     <?php if (!empty($users)) : ?>
                         <?php foreach ($users as $user) : ?>
