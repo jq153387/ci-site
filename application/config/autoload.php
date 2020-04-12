@@ -111,7 +111,7 @@ $autoload['config'] = array('ci-blog');
 | "codeigniter_lang.php" would be referenced as array('codeigniter');
 |
 */
-$autoload['language'] =array('auth', 'ion_auth');
+$autoload['language'] =array('auth', 'ion_auth','admin');
 
 /*
 | -------------------------------------------------------------------

@@ -62,7 +62,6 @@ class MY_Controller extends CI_Controller
         $this->data['right_sidebar'] = $this->load->view('themes/' . $this->config->item('ci_blog_theme') . '/right_sidebar', $this->data, TRUE);
         $this->data['footer'] = $this->load->view('themes/' . $this->config->item('ci_blog_theme') . '/footer', $this->data, TRUE);
 
-        echo $this->data['main_menus'];
         $this->base_assets_url = 'assets/' . THEMES_DIR . '/' . $this->config->item('ci_blog_theme') . '/';
         $this->data['base_assets_url'] = BASE_URI . $this->base_assets_url;
         if ($layout == true) {

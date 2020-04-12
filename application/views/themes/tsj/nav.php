@@ -1,6 +1,7 @@
 <nav>
   <div id="iflash">
     <ul id="menubar">
+    <?php echo $main_menus;?>
       <li id="m_01"><a href="/about.asp"><strong>公司簡介</strong></a></li>
       <li id="m_02"><a href="/product.asp"><strong>產品介紹</strong></a></li>
       <li id="m_03"><a href="/guestbook.asp"><strong>好友推薦</strong></a></li>

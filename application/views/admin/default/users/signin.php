@@ -21,27 +21,27 @@
     <body class="bg-black">
 
         <div class="form-box" id="login-box">
-            <div class="header">Sign In</div>
+            <div class="header"><?php echo lang('login_heading');?></div>
             <?php echo form_open("users/signin");?>
                 <div class="body bg-gray">
                     <?php echo message_box(validation_errors(),'danger'); ?>
                     <?php echo $this->session->flashdata('message');?>
                     <div class="form-group">
-                        <input type="text" name="identity" class="form-control" placeholder="Email"/>
+                        <input type="text" name="identity" class="form-control" placeholder="<?php echo lang('login_identity_label');?>"/>
                     </div>
                     <div class="form-group">
-                        <input type="password" name="password" class="form-control" placeholder="Password"/>
+                        <input type="password" name="password" class="form-control" placeholder="<?php echo lang('login_password_label');?>"/>
                     </div>          
                     <div class="form-group">
-                        <input type="checkbox" name="remember" value="1" /> Remember me
+                        <input type="checkbox" name="remember" value="1" /> <?php echo lang('login_remember_label');?>
                     </div>
                 </div>
                 <div class="footer">                                                               
-                    <button type="submit" class="btn bg-olive btn-block">Sign me in</button>  
+                    <button type="submit" class="btn bg-olive btn-block"><?php echo lang('login_submit_btn');?></button>  
                     
-                    <p><a href="<?php echo site_url('forgot_password')?>">I forgot my password</a></p>
+                    <p><a href="<?php echo site_url('forgot_password')?>"><?php echo lang('login_forgot_password');?></a></p>
                     
-                    <a href="<?php echo site_url('signup')?>" class="text-center">Create new account</a>
+                    <a href="<?php echo site_url('signup')?>" class="text-center"><?php echo lang('create_user_submit_btn');?></a>
                 </div>
             <?php echo form_close();?>
         </div>

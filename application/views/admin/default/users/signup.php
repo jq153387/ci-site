@@ -21,7 +21,7 @@
     <body class="bg-black">
 
         <div class="form-box" id="login-box">
-            <div class="header">Create New Account</div>
+            <div class="header"><?php echo lang('create_user_heading');?></div>
             <?php echo form_open("signup");?>
                 <div class="body bg-gray">
                     <?php echo $message;?>
@@ -52,7 +52,7 @@
                 </div>
                 <div class="footer">                    
                     <button type="submit" class="btn bg-olive btn-block"><?php echo lang('create_user_submit_btn');?></button>
-                    <a href="<?php echo site_url('signin')?>" class="text-center">I already have account</a>
+                    <a href="<?php echo site_url('signin')?>" class="text-center"><?php echo lang('admin_i_already_have_account');?></a>
                 </div>
             </form>
         </div>

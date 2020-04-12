@@ -33,7 +33,7 @@
                 </div>
                 <div class="footer">                                                               
                     <button type="submit" class="btn bg-olive btn-block"><?php echo lang('forgot_password_submit_btn') ?></button>  
-                     <p><a href="<?php echo site_url('signin')?>">Back to Sign In</a></p>
+                     <p><a href="<?php echo site_url('signin')?>"><?php echo lang('admin_back_to_sing_in');?></a></p>
                 </div>
             <?php echo form_close();?>
         </div>

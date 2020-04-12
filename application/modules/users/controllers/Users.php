@@ -9,6 +9,7 @@ class Users extends MY_Controller
 		parent::__construct();
 		$this->form_validation->set_error_delimiters($this->config->item('error_start_delimiter', 'ion_auth'), $this->config->item('error_end_delimiter', 'ion_auth'));
 		$this->lang->load('auth');
+		//$this->lang->load('admin');
 		$this->load->model('User');
 		$this->load->model('Group');
 
@@ -40,7 +41,7 @@ class Users extends MY_Controller
 				//if the login was un-successful
 				//redirect them back to the login page
 				$this->session->set_flashdata('message', message_box($this->ion_auth->errors(), 'danger'));
-				redirect('signin', 'refresh'); //use redirects instead of loading views for compatibility with MY_Controller libraries
+				redirect('a', 'refresh'); //use redirects instead of loading views for compatibility with MY_Controller libraries
 			}
 		}
 
@@ -51,7 +52,7 @@ class Users extends MY_Controller
 	{
 		$this->ion_auth->logout();
 		$this->session->set_flashdata('message', message_box('You have signed out successfully', 'success'));
-		redirect('signin', 'refresh');
+		redirect('a', 'refresh');
 	}
 
 	//change password
@@ -154,7 +155,7 @@ class Users extends MY_Controller
 			if ($forgotten) {
 				//if there were no errors
 				$this->session->set_flashdata('message', $this->ion_auth->messages());
-				redirect("signin", 'refresh'); //we should display a confirmation page here instead of the login page
+				redirect("a", 'refresh'); //we should display a confirmation page here instead of the login page
 			} else {
 				$this->session->set_flashdata('message', $this->ion_auth->errors());
 				redirect("users/forgot_password", 'refresh');
@@ -253,7 +254,7 @@ class Users extends MY_Controller
 		if ($activation) {
 			//redirect them to the auth page
 			$this->session->set_flashdata('message', message_box($this->ion_auth->messages(), 'success'));
-			redirect("signin", 'refresh');
+			redirect("a", 'refresh');
 		} else {
 			//redirect them to the forgot password page
 			$this->session->set_flashdata('message', message_box($this->ion_auth->errors(), 'danger'));
