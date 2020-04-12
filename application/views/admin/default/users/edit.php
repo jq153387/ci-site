@@ -1,15 +1,15 @@
 <div class="row">
-	<div class="col-md-12">
-		 <!-- general form elements -->
+    <div class="col-md-12">
+        <!-- general form elements -->
         <div class="box box-primary">
             <div class="box-header">
                 <h3 class="box-title"><?php echo lang('admin_edit_user');?></h3>
             </div><!-- /.box-header -->
             <!-- form start -->
-            <form role="form" action="<?php echo site_url('admin/users/edit')?>" method="post">
-                <input type="hidden" name="id" value="<?php echo $user['id']?>">
+            <form role="form" action="<?php echo site_url('admin/users/edit') ?>" method="post">
+                <input type="hidden" name="id" value="<?php echo $user['id'] ?>">
                 <div class="box-body">
-                    <?php echo $this->session->flashdata('message');?>
+                    <?php echo $this->session->flashdata('message'); ?>
                     <?php echo validation_errors(); ?>
                     <div class="form-group">
                         <label for="username"><?php echo lang('admin_username');?></label>
@@ -46,13 +46,13 @@
                     <div class="form-group">
                         <label for="category_active"><?php echo lang('admin_groups');?></label>
                         <?php
-                            echo form_dropdown('groups[]',$groups, explode(',', $user['group_ids']),array('class' => 'form-control','multiple' => true));
+                        echo form_dropdown('groups[]', $groups, explode(',', $user['group_ids']), array('class' => 'form-control', 'multiple' => true));
                         ?>
                     </div>
                     <div class="form-group">
                         <label for="category_active"><?php echo lang('admin_status');?></label>
                         <?php
-                            echo form_dropdown('active',$user_status, isset($user['active']) ? $user['active'] : '',array('class' => 'form-control'));
+                        echo form_dropdown('active', $user_status, isset($user['active']) ? $user['active'] : '', array('class' => 'form-control'));
                         ?>
                     </div>
                 </div><!-- /.box-body -->
@@ -63,5 +63,5 @@
                 </div>
             </form>
         </div><!-- /.box -->
-	</div>
+    </div>
 </div>

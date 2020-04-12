@@ -108,9 +108,9 @@ class Users extends MY_Controller
 			);
 
 			if ($this->form_validation->run() == true && $this->ion_auth->register($username, $password, $email, $additional_data, $this->input->post('groups'))) {
-				$this->session->set_flashdata('message', message_box('User has been saved', 'success'));
+				$this->session->set_flashdata('message', message_box('使用者已儲存', 'success'));
 			} else {
-				$this->session->set_flashdata('message', message_box('Failed, please try again!', 'danger'));
+				$this->session->set_flashdata('message', message_box('錯誤, 請再試一次!', 'danger'));
 			}
 			redirect('admin/users/index');
 		}
@@ -164,7 +164,7 @@ class Users extends MY_Controller
 					}
 				}
 			}
-			$this->session->set_flashdata('message', message_box('User has been saved', 'success'));
+			$this->session->set_flashdata('message', message_box('使用者已儲存', 'success'));
 			redirect('admin/users/index');
 		}
 
@@ -181,21 +181,21 @@ class Users extends MY_Controller
 		$user_groups = explode(',', $user['ggroups']);
 
 		if (in_array('admin', $user_groups)) {
-			$this->session->set_flashdata('message', message_box('Failed, could not delete admin user', 'danger'));
+			$this->session->set_flashdata('message', message_box('Failed, 不能刪除 admin 使用者', 'danger'));
 			redirect('admin/users/index');
 		}
 
 		if ($current_user['user_id'] == $id) {
-			$this->session->set_flashdata('message', message_box('Failed, you could not delete yourself', 'danger'));
+			$this->session->set_flashdata('message', message_box('Failed, 你不能刪除你自己', 'danger'));
 			redirect('admin/users/index');
 		}
 
 		if (!empty($id)) {
 			$this->User->delete($id);
-			$this->session->set_flashdata('message', message_box('User has been deleted', 'success'));
+			$this->session->set_flashdata('message', message_box('使用者已刪除', 'success'));
 			redirect('admin/users/index');
 		} else {
-			$this->session->set_flashdata('message', message_box('Invalid id', 'danger'));
+			$this->session->set_flashdata('message', message_box('無效的 id', 'danger'));
 			redirect('admin/users/index');
 		}
 	}
