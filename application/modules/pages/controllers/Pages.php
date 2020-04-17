@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Welcome extends MY_Controller
+class Pages extends MY_Controller
 {
 
 	/**
@@ -22,13 +22,21 @@ class Welcome extends MY_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('Post');
+		//$this->load->model('Post');
 	}
-	public function index()
+	public function about()
 	{
-		$this->data['home_page'] = 1;
-		$this->data['page_title'] = '首頁';
-		//$this->data['posts'] = $this->Post->find_active(3);
-		$this->load_theme('welcome');
+		$this->data['page_title'] = '鑽戒、鑽石推薦';
+		$this->load_theme('pages/about');
+	}
+	public function contact()
+	{
+		$this->data['page_title'] = '服務據點';
+		$this->load_theme('pages/contact');
+	}
+	public function mail()
+	{
+		$this->data['page_title'] = '聯絡我們';
+		$this->load_theme('pages/mail');
 	}
 }

@@ -72,3 +72,18 @@ $route['tag/(:any)/(:num)'] = 'posts/tag/$1/$2';
 
 $route['blog'] = 'posts/index';
 $route['blog/(:num)'] = 'posts/index/$1';
+
+$route['about'] = 'pages/about';
+$route['contact'] = 'pages/contact';
+$route['mail'] = 'pages/mail';
+
+//album
+$route['product'] = 'album/index/61';
+$route['thcard'] = 'album/index/62';
+$route['partner'] = 'album/index/63';
+//api
+$route['api/album_sub/(:num)'] = 'album/album_sub/$1';
+$route['api/album_photo/(:num)'] = 'album/album_photo/$1';
+//comments
+$route['guestbook'] = 'comments/index';
+$route['guestbook/(:num)'] = 'comments/index/$1';

@@ -11,13 +11,20 @@ defined('BASEPATH') or exit('No direct script access allowed');
   <meta name="keywords" content="鑽石,婚戒,GIA,彩鑽,1克拉,求婚戒,鑽石價格,戒指,克拉,鑽戒">
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-  <title><?php echo $page_title ?> - CI Blog</title>
-  <?php //if(!empty($home_page)):?>
+  <title><?php echo $page_title ?> - <?php echo $site_title ?></title>
+  <?php //if(!empty($home_page)):
+  ?>
   <link href="<?php echo $base_assets_url; ?>css/ind.css" rel="stylesheet" type="text/css">
-  <?php //else:?>
+  <link href="<?php echo $base_assets_url; ?>css/pager.css" rel="stylesheet" type="text/css">
+  <link href="<?php echo $base_assets_url; ?>css/colorbox.css" rel="stylesheet" type="text/css">
+
+  <?php //else:
+  ?>
   <!-- Main Css -->
-  <!-- <link href="<?php //echo $base_assets_url; ?>css/style.css" rel="stylesheet" type="text/css"> -->
-  <?php //endif;?>
+  <!-- <link href="<?php //echo $base_assets_url; 
+                    ?>css/style.css" rel="stylesheet" type="text/css"> -->
+  <?php //endif;
+  ?>
   <script src="<?php echo $base_assets_url; ?>js/swfobject.js" type="text/javascript"></script>
   <script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -31,33 +38,25 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <body>
   <div id="outer-wrapper">
     <?php echo $header; ?>
-    <?php echo $nav; ?>
-    <div id="flash-wrapper">
-      <div class="fb-share">
-        <a name="fb_share" type="button" share_url="http://www.tsj-diamond.com/" href="http://www.facebook.com/sharer.php">分享TSJ鑽石工場</a>
+    <div id="main-wrapper">
+      <?php echo $nav; ?>
+      <div id="content-wrapper">
+        <?php echo $content; ?>
       </div>
-      <div id="iflash2"><img src="<?php echo $base_assets_url; ?>images/ind_12.gif"></div>
-      <script type="text/javascript">
-        var flashvars = {};
-        var params = {};
-        params.menu = "false";
-        params.wmode = "transparent";
-        params.bgcolor = "#CCCCCC";
-        params.allowfullscreen = "true";
-        params.allowscriptaccess = "always";
-        var attributes = {};
-        attributes.id = "iflash2";
-        attributes.name = "iflash2";
-        swfobject.embedSWF("swf/ind-ban1.swf", "iflash2", "840", "325", "10.0.2", "false", flashvars, params, attributes);
-      </script>
+      <?php echo $nav_bot; ?>
     </div>
-    <section>
-      <!--#include file="dw-menu.html" -->
-    </section>
-
   </div>
   <?php echo $footer; ?>
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
   <script src="<?php echo $base_assets_url; ?>js/jquery.js"></script>
+  <script src="<?php echo $base_assets_url; ?>js/jquery.colorbox.js" type="text/javascript"></script>
+  <script src="<?php echo $base_assets_url; ?>js/color.js" type="text/javascript"></script>
+  <script src="<?php echo $base_assets_url; ?>js/jquery.pager.js" type="text/javascript"></script>
+  <script src="<?php echo $base_assets_url; ?>js/jq-product.js" type="text/javascript"></script>
+  <?php if ($slug) : ?>
+    <script type="text/javascript">
+      ablum_init(<?php echo $slug; ?>);
+    </script>
+  <?php endif; ?>
 
 </html>
