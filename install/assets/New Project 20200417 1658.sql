@@ -3598,6 +3598,9 @@ CREATE TABLE `product` (
 
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
 INSERT INTO `product` (`id`,`sub_class_id`,`sort`,`show_front`,`flag`,`name`,`photo_url`) VALUES 
+ (3454,'62',2,'1','1','TSJ - 新人謝卡',NULL),
+ (3455,'63',1,'1','1','TSJ - 特約公司',NULL),
+ (3460,'62',1,'1','1','TSJ - 甜蜜的朋友',NULL),
  (3461,'61',1,'1','1','TSJ - 鑽石設計',''),
  (3463,'61',2,'1','1','TSJ - 寶石設計','');
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
@@ -3613,6 +3616,7 @@ CREATE TABLE `product_class` (
   `language_id` varchar(255) DEFAULT NULL,
   `sort` int(11) DEFAULT NULL,
   `show_front` varchar(255) DEFAULT NULL,
+  `sub_name` varchar(45) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `photo_url` varchar(255) DEFAULT NULL,
   `level` varchar(255) DEFAULT NULL,
@@ -3627,10 +3631,10 @@ CREATE TABLE `product_class` (
 --
 
 /*!40000 ALTER TABLE `product_class` DISABLE KEYS */;
-INSERT INTO `product_class` (`id`,`language_id`,`sort`,`show_front`,`name`,`photo_url`,`level`,`list`,`content`) VALUES 
- (61,'2',1,'1','產品介紹','','2','1',''),
- (62,'2',2,'1','新人謝卡','','2','1',''),
- (63,'2',3,'1','特約廠商','','2','1','');
+INSERT INTO `product_class` (`id`,`language_id`,`sort`,`show_front`,`sub_name`,`name`,`photo_url`,`level`,`list`,`content`) VALUES 
+ (61,'2',1,'1','Products','產品介紹','','2','1',''),
+ (62,'2',2,'1','Thanks Card','新人謝卡','','2','1',''),
+ (63,'2',3,'1','Partners','特約廠商','','2','1','');
 /*!40000 ALTER TABLE `product_class` ENABLE KEYS */;
 
 
