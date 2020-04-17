@@ -6,4 +6,4 @@
 */cache/!.htaccess
 # application/config/database.php
 vendor
-assets/uploads/*
+#assets/uploads/*
