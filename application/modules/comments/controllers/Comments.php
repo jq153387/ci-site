@@ -52,13 +52,25 @@ class Comments extends My_Controller
 		$this->form_validation->set_rules('username', 'Username', 'trim|required|min_length[5]|max_length[12]|xss_clean');
 		$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
 		$data = $_POST;
+		if ($_FILES['file']['name'] != "") {
+			$config['upload_path'] = '/assets/uploads/';
+			$config['allowed_types'] =     'gif|jpg|png|jpeg|jpe|pdf|doc|docx|rtf|text|txt';
+			$this->load->library('upload', $config);
+			if (!$this->upload->do_upload('file')) {
+				$error = array('error' => $this->upload > display_errors());
+			} else {
+				$upload_data = $this->upload->data();
+				$image_name = $upload_data['file_name'];
+			}
+		} else {
+			$image_name = $this->input->post('old');
+		}
+		//google captch
 		$captcha = $_POST['g-recaptcha-response'];
 		$secretKey = "6Lf5O-sUAAAAABkMn_iWIcv1AG_zpzoz40jvzYK2";
 		$url = 'https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode($secretKey) .  '&response=' . urlencode($captcha);
 		$response = file_get_contents($url);
 		$responseKeys = json_decode($response, true);
-
-
 		if ($this->form_validation->run() == true && $responseKeys["success"]) {
 
 			print_r($data);

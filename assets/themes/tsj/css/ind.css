@@ -493,3 +493,8 @@ address .add li {
     border: 1px solid transparent;
     border-radius: 0.25rem;
 }
+#image_id {
+    background-color: transparent;
+    border: none;
+    color: #949494;
+}

@@ -20,6 +20,9 @@
             <li>
                 <b>內容</b><textarea name="content" cols="80" rows="5"></textarea>
             </li>
+            <li><b>上傳圖片</b>
+                <input name="file" type="file" id="image_id">
+            </li>
             <li>
                 <b>驗證碼</b>
                 <div style="padding: 10px 0px" class="g-recaptcha" data-sitekey="6Lf5O-sUAAAAAKtGSE1uSfCGP1PUwZVIa6u_qo3y"></div>
