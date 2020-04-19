@@ -45,10 +45,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
   <script src="<?php echo $base_assets_url; ?>js/color.js" type="text/javascript"></script>
   <script src="<?php echo $base_assets_url; ?>js/jquery.pager.js" type="text/javascript"></script>
   <script src="<?php echo $base_assets_url; ?>js/jq-product.js" type="text/javascript"></script>
-  <?php if ($slug) : ?>
-    <script type="text/javascript">
-      ablum_init(<?php echo $slug; ?>);
-    </script>
+  <?php if (isset($slug)) : ?>
+    <?php if ($slug) : ?>
+      <script type="text/javascript">
+        ablum_init(<?php echo $slug; ?>);
+      </script>
+    <?php endif; ?>
   <?php endif; ?>
 
 </html>

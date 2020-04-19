@@ -1,52 +1,49 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Comments extends CI_Model
+class Comment_s extends CI_Model
 {
 
-	var $table = 'product_class';
-	var $product = 'product';
-	var $photo = 'photo';
+	var $table = 'comments';
+	var $photo = 'photo1';
 	// Constructor
 	function __construct()
 	{
 		parent::__construct();
 	}
 
-	function find($id)
+	function find_comments($limit = null, $offset = 0)
 	{
-		$this->db->select('product_class.*,product.name as subname,product.id as subname_id,photo.url');
-		$this->db->join('product', 'product.sub_class_id = product_class.id', 'right');
-		$this->db->join('photo', 'photo.product_id = product.id', 'right');
-
-		if ($id != null) {
-			$this->db->where('product_class.id', $id);
-		}
-		$this->db->order_by('photo.id', 'desc');
+		$this->db->select('*');
+		$array = array('published =' => 1, 'class_id =' => "");
+		//$this->db->where('class_id', null);
+		$this->db->where($array);
+		$this->db->or_where('class_id is null');
+		$this->db->limit($limit, $offset);
+		$this->db->order_by('id', 'desc');
 		$query = $this->db->get($this->table);
 		//print_r($this->db->last_query());
 		return $query->result_array();
 	}
-	function find_product($id)
+	function find_review($id)
 	{
-		$this->db->select('product.*');
+		$this->db->select('*');
+		$this->db->where('class_id', $id);
+		$this->db->where('published', 1);
 
-		if ($id != null) {
-			$this->db->where('product.sub_class_id', $id);
-		}
-		$this->db->order_by('product.sort', 'ASC');
-		$query = $this->db->get($this->product);
+		$this->db->order_by('id', 'desc');
+		$query = $this->db->get($this->table);
 		//print_r($this->db->last_query());
 		return $query->result_array();
 	}
 	function find_photo($id)
 	{
-		$this->db->select('photo.*');
+		$this->db->select('*');
 
 		if ($id != null) {
-			$this->db->where('photo.product_id', $id);
+			$this->db->where('product_id', $id);
 		}
-		$this->db->order_by('photo.id', 'DESC');
+		$this->db->order_by('id', 'DESC');
 		$query = $this->db->get($this->photo);
 		//print_r($this->db->last_query());
 		return $query->result_array();

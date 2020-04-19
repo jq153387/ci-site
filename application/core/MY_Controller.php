@@ -58,14 +58,14 @@ class MY_Controller extends CI_Controller
         if (count($this->Menu->findActive()) > 0) {
             $this->data['main_menus'] = $this->general->bootstrap_menu($this->Menu->findActive());
         }
+        $this->base_assets_url = 'assets/' . THEMES_DIR . '/' . $this->config->item('ci_blog_theme') . '/';
+        $this->data['base_assets_url'] = BASE_URI . $this->base_assets_url;
         $this->data['header'] = $this->load->view('themes/' . $this->config->item('ci_blog_theme') . '/header', $this->data, TRUE);
         $this->data['nav'] = $this->load->view('themes/' . $this->config->item('ci_blog_theme') . '/nav', $this->data, TRUE);
         $this->data['nav_bot'] = $this->load->view('themes/' . $this->config->item('ci_blog_theme') . '/nav_bot', $this->data, TRUE);
         $this->data['right_sidebar'] = $this->load->view('themes/' . $this->config->item('ci_blog_theme') . '/right_sidebar', $this->data, TRUE);
         $this->data['footer'] = $this->load->view('themes/' . $this->config->item('ci_blog_theme') . '/footer', $this->data, TRUE);
 
-        $this->base_assets_url = 'assets/' . THEMES_DIR . '/' . $this->config->item('ci_blog_theme') . '/';
-        $this->data['base_assets_url'] = BASE_URI . $this->base_assets_url;
 
         if ($layout == true) {
             $this->data['content'] = (is_null($content)) ? '' : $this->load->view(THEMES_DIR . '/' . $this->config->item('ci_blog_theme') . '/' . $content, $this->data, TRUE);
