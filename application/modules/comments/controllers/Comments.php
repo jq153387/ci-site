@@ -92,25 +92,27 @@ class Comments extends My_Controller
 					echo "resiazing";
 					$config1['source_image'] = $this->upload->upload_path . $this->upload->file_name;
 					$config1['new_image'] =  './assets/uploads/' . $filename_new;
-					$config1['maintain_ratio'] = true; //等比例
+					$config1['maintain_ratio'] = true; //等比
 					$config1['width'] = 181;
 					$config1['height'] = 181;
 					$this->load->library('image_lib', $config1);
 					if (!$this->image_lib->resize()) {
-						$this->session->set_flashdata('message', $this->image_lib->display_errors('', ''));
+						$this->session->set_flashdata('error', $this->image_lib->display_errors('', ''));
 					}
-					$post_data['image'] = $filename;
+					unlink($config1['source_image']); //remove source image
+					$post_data['image'] = $filename_new;
 				} else {
 					$this->session->set_flashdata('error', $this->upload->display_errors());
 				}
 			}
-			//$this->session->set_flashdata('message', '成功送出留言。（需等待審核，TSJ將盡速處理你的留言，謝謝你。）');
-			//$this->load->view('login');
+			$this->session->set_flashdata('message', '成功送出留言。（需等待審核，TSJ將盡速處理你的留言，謝謝你。）');
+			$this->index($data['page']);
 		} else {
 			if (!$responseKeys["success"]) {
 				$this->session->set_flashdata('error', '抱歉！驗證碼不成功，請勾選我不是機器人。');
 			}
 			$this->index($data['page']);
+			//redirect('/comments/add', 'refresh');
 		}
 	}
 	// public function album_photo($slug)

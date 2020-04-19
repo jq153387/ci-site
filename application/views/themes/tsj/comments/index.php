@@ -6,9 +6,11 @@
     <dd class="contact-m">
         <?php if ($this->session->flashdata('error')) : ?>
             <div class="alert alert-danger"><strong><?= $this->session->flashdata('error') ?></strong></div>
+            <?php unset($_SESSION['error']); ?>
         <?php endif; ?>
         <?php if ($this->session->flashdata('message')) : ?>
             <div class="alert alert-success"><strong><?= $this->session->flashdata('message') ?></strong></div>
+            <?php unset($_SESSION['message']); ?>
         <?php endif; ?>
         <?php echo form_open_multipart('comments/add'); ?>
         <ul class="cont-list" style="width:650px">
