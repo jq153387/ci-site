@@ -4,10 +4,13 @@
         <h1>求婚戒指 - 好友推薦<i>/ Friends Introduced</i></h1>
     </dt>
     <dd class="contact-m">
-        <?php if ($this->session->flashdata('message')) : ?>
-            <div class="error"><strong><?= $this->session->flashdata('message') ?></strong></div>
+        <?php if ($this->session->flashdata('error')) : ?>
+            <div class="alert alert-danger"><strong><?= $this->session->flashdata('error') ?></strong></div>
         <?php endif; ?>
-        <?php echo form_open('comments/add'); ?>
+        <?php if ($this->session->flashdata('message')) : ?>
+            <div class="alert alert-success"><strong><?= $this->session->flashdata('message') ?></strong></div>
+        <?php endif; ?>
+        <?php echo form_open_multipart('comments/add'); ?>
         <ul class="cont-list" style="width:650px">
             <li>
                 <b>暱稱</b><input name="username" type="text" id="username" size="30" value="<?php echo set_value('username'); ?>">

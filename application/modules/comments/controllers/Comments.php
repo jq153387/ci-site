@@ -52,19 +52,6 @@ class Comments extends My_Controller
 		$this->form_validation->set_rules('username', 'Username', 'trim|required|min_length[5]|max_length[12]|xss_clean');
 		$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
 		$data = $_POST;
-		if ($_FILES['file']['name'] != "") {
-			$config['upload_path'] = '/assets/uploads/';
-			$config['allowed_types'] =     'gif|jpg|png|jpeg|jpe|pdf|doc|docx|rtf|text|txt';
-			$this->load->library('upload', $config);
-			if (!$this->upload->do_upload('file')) {
-				$error = array('error' => $this->upload > display_errors());
-			} else {
-				$upload_data = $this->upload->data();
-				$image_name = $upload_data['file_name'];
-			}
-		} else {
-			$image_name = $this->input->post('old');
-		}
 		//google captch
 		$captcha = $_POST['g-recaptcha-response'];
 		$secretKey = "6Lf5O-sUAAAAABkMn_iWIcv1AG_zpzoz40jvzYK2";
@@ -73,11 +60,55 @@ class Comments extends My_Controller
 		$responseKeys = json_decode($response, true);
 		if ($this->form_validation->run() == true && $responseKeys["success"]) {
 
-			print_r($data);
+			print_r($_FILES['file']);
+			//upload image
+			// $image_name = '';
+
+			// if ($_FILES['file']['name'] != "") {
+			// 	$config['upload_path'] = './assets/uploads/';
+			// 	$config['allowed_types'] = 'gif|jpg|png|jpeg|jpe';
+			// 	$this->load->library('upload', $config);
+			// 	if (!$this->upload->do_upload('file')) {
+			// 		$error = array('error' => $this->upload->display_errors());
+			// 	} else {
+			// 		$upload_data = $this->upload->data();
+			// 		$image_name = $upload_data['file_name'];
+			// 		echo 'fff';
+			// 	}
+			// }
+
+			if (isset($_FILES['file']) && !empty($_FILES['file']['name'])) {
+				$upload_path = "./assets/uploads/";
+				$newFileName = explode(".", $_FILES['file']['name']);
+				$filename = time() . "-" . rand(00, 99) . "." . end($newFileName);
+				$filename_new = time() . "-" . rand(00, 99) . "_new." . end($newFileName);
+				$config['file_name'] = $filename;
+				$config['upload_path'] = $upload_path;
+				$config['allowed_types'] = 'gif|jpg|png|jpeg';
+				$this->load->library('upload', $config);
+				echo "ddd";
+				if ($this->upload->do_upload('file')) {
+					//Image Resizing 
+					echo "resiazing";
+					$config1['source_image'] = $this->upload->upload_path . $this->upload->file_name;
+					$config1['new_image'] =  './assets/uploads/' . $filename_new;
+					$config1['maintain_ratio'] = true; //等比例
+					$config1['width'] = 181;
+					$config1['height'] = 181;
+					$this->load->library('image_lib', $config1);
+					if (!$this->image_lib->resize()) {
+						$this->session->set_flashdata('message', $this->image_lib->display_errors('', ''));
+					}
+					$post_data['image'] = $filename;
+				} else {
+					$this->session->set_flashdata('error', $this->upload->display_errors());
+				}
+			}
+			//$this->session->set_flashdata('message', '成功送出留言。（需等待審核，TSJ將盡速處理你的留言，謝謝你。）');
 			//$this->load->view('login');
 		} else {
 			if (!$responseKeys["success"]) {
-				$this->session->set_flashdata('message', '抱歉！驗證碼不成功，請勾選我不是機器人。');
+				$this->session->set_flashdata('error', '抱歉！驗證碼不成功，請勾選我不是機器人。');
 			}
 			$this->index($data['page']);
 		}
