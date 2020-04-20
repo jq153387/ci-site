@@ -35,7 +35,6 @@
         </ul>
         <div class="send"><button style="padding:3px 15px;">發表</button></div>
         <input type="hidden" name="mail" value="tsj4c@ms59.hinet.net;huang19711127@gmail.com;tim@otaku66.com;wenwen0212@gmail.com">
-        <input type="hidden" name="published" value="0">
         <input type="hidden" name="page" value="<?php echo $page_config['page']; ?>">
         </form>
     </dd>

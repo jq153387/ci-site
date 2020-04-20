@@ -39,4 +39,19 @@ class Pages extends MY_Controller
 		$this->data['page_title'] = '聯絡我們';
 		$this->load_theme('pages/mail');
 	}
+	public function sendmail()
+	{
+		$this->load->library('email'); //加載CI的email類
+		//以下設置Email內容
+		$this->email->from('service@tsj-diamond.com', 'tsj-diamond.com');
+		$this->email->to('jq153387@gmail.com');
+		$this->email->subject('Email Test');
+		$this->email->message('<font color=red>Testing the email class.</font>');
+		//$this->email->attach('application\controllers\1.jpeg'); //相對於index.php的路徑
+		if ($this->email->send()) {
+			echo 'Your email was sent, thanks chamil.';
+		} else {
+			show_error($this->email->print_debugger()); //返回包含郵件內容的字符串，包括EMAIL頭和EMAIL正文。用於調試。
+		}
+	}
 }
