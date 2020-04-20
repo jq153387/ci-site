@@ -15,17 +15,20 @@
         <?php echo form_open_multipart('comments/add'); ?>
         <ul class="cont-list" style="width:650px">
             <li>
-                <b>暱稱</b><input name="username" type="text" id="username" size="30" value="<?php echo set_value('username'); ?>">
+                <b><span style="color:red;">*</span> 暱稱</b>
+                <input name="username" type="text" id="username" size="30" value="<?php echo set_value('username'); ?>">
                 <div class="from_error"><?php echo form_error('username'); ?></div>
             </li>
             <li>
-                <b>信箱</b><input name="email" type="text" id="email" size="30" value="<?php echo set_value('email'); ?>">
+                <b><span style="color:red;">*</span> 信箱</b>
+                <input name="email" type="text" id="email" size="30" value="<?php echo set_value('email'); ?>">
                 <div class="from_error"><?php echo form_error('email'); ?></div>
             </li>
             <li>
                 <b>內容</b><textarea name="content" cols="80" rows="5"></textarea>
             </li>
-            <li><b>上傳圖片</b>
+            <li>
+                <b>上傳圖片</b>
                 <input name="file" type="file" id="image_id">
             </li>
             <li>
@@ -34,7 +37,7 @@
             </li>
         </ul>
         <div class="send"><button style="padding:3px 15px;">發表</button></div>
-        <input type="hidden" name="mail" value="tsj4c@ms59.hinet.net;huang19711127@gmail.com;tim@otaku66.com;wenwen0212@gmail.com">
+        <!-- <input type="hidden" name="mail" value="tsj4c@ms59.hinet.net;huang19711127@gmail.com;tim@otaku66.com;wenwen0212@gmail.com"> -->
         <input type="hidden" name="page" value="<?php echo $page_config['page']; ?>">
         </form>
     </dd>
@@ -127,21 +130,6 @@
     <?php endforeach; ?>
     <!-- footer-->
     <dd>
-        <!--table width="500" border="0" class="new_table" cellpadding="0" cellspacing="5">
-            <tbody>
-                <tr>
-                    <td width="8%" valign="middle">
-                        <a href="guestbook.asp?page=1"><img src="<?php echo $base_assets_url; ?>images/btn1.gif" name="Image26" width="38" height="23" border="0" id="Image26"></a></td>
-                    <td width="6%" valign="middle">
-                        <a href="guestbook.asp?page=1"><img src="<?php echo $base_assets_url; ?>images/btn2.gif" name="Image27" width="27" height="23" border="0" id="Image27"></a></td>
-                    <td width="70%" align="center" valign="middle" class="cont-font"><span>&nbsp;1</span><a href="guestbook.asp?page=2">&nbsp;&nbsp;2</a><a href="guestbook.asp?page=3">&nbsp;&nbsp;3</a><a href="guestbook.asp?page=4">&nbsp;&nbsp;4</a><a href="guestbook.asp?page=5">&nbsp;&nbsp;5</a><a href="guestbook.asp?page=6">&nbsp;&nbsp;6</a><a href="guestbook.asp?page=7">&nbsp;&nbsp;7</a><a href="guestbook.asp?page=8">&nbsp;&nbsp;8</a></td>
-                    <td width="6%" valign="middle">
-                        <a href="guestbook.asp?page=2"><img src="<?php echo $base_assets_url; ?>images/btn3.gif" name="Image28" width="28" height="23" border="0" id="Image28"></a></td>
-                    <td width="10%" valign="middle">
-                        <a href="guestbook.asp?page=8"><img src="<?php echo $base_assets_url; ?>images/btn4.gif" name="Image29" width="39" height="23" border="0" id="Image29"></a></td>
-                </tr>
-            </tbody>
-        </table-->
         <div class="page-w">
             <?php echo $pagination; ?>
         </div>

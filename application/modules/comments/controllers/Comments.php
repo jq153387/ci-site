@@ -47,9 +47,32 @@ class Comments extends My_Controller
 		//echo print_r($this->data, true);
 		$this->load_theme('comments/index');
 	}
+	public function sendMAIL($data)
+	{
+		$this->load->library('email'); //加載CI的email類
+		$this->email->from('service@mybells.tw', 'tsj-diamond.com');
+		// $to_mails = array('tsj4c@ms59.hinet.net', 'huang19711127@gmail.com', 'tim@otaku66.com', 'wenwen0212@gmail.com');
+		// $this->email->to($to_mails);
+		$this->email->to('jq153387@gmail.com');
+		$this->email->subject('等待審核:TSJ好友推薦 ' . $data['username'] . ' 留言');
+		$send_content = array(
+			$data['username'] . '留言於TSJ好友推薦，等待您至網站後台審核結果。',
+			'暱稱:' . $data['username'],
+			'信箱:' . $data['email'],
+			'內容:' . $data['content'],
+			'資訊提供經由網站 www.tsj-diamond.com'
+		);
+		$this->email->message(implode("<br/>", $send_content));
+		if ($data['image'] != "") {
+			$this->email->attach($data['image_url']); //相對於index.php的路徑
+		}
+		if (!$this->email->send()) {
+			show_error($this->email->print_debugger()); //返回包含郵件內容的字符串，包括EMAIL頭和EMAIL正文。用於調試。
+		}
+	}
 	public function add()
 	{
-		$this->form_validation->set_rules('username', 'Username', 'trim|required|min_length[5]|max_length[12]|xss_clean');
+		$this->form_validation->set_rules('username', '暱稱', 'trim|required|xss_clean');
 		$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
 		$data = $_POST;
 		//google captch
@@ -76,7 +99,7 @@ class Comments extends My_Controller
 			// 		echo 'fff';
 			// 	}
 			// }
-
+			$data['image'] = "";
 			if (isset($_FILES['file']) && !empty($_FILES['file']['name'])) {
 				$upload_path = "./assets/uploads/";
 				$newFileName = explode(".", $_FILES['file']['name']);
@@ -93,18 +116,20 @@ class Comments extends My_Controller
 					$config1['source_image'] = $this->upload->upload_path . $this->upload->file_name;
 					$config1['new_image'] =  './assets/uploads/' . $filename_new;
 					$config1['maintain_ratio'] = true; //等比
-					$config1['width'] = 181;
-					$config1['height'] = 181;
+					$config1['width'] = 800;
+					$config1['height'] = 800;
 					$this->load->library('image_lib', $config1);
 					if (!$this->image_lib->resize()) {
 						$this->session->set_flashdata('error', $this->image_lib->display_errors('', ''));
 					}
 					unlink($config1['source_image']); //remove source image
-					$post_data['image'] = $filename_new;
+					$data['image'] = $filename_new;
+					$data['image_url'] = $config1['new_image'];
 				} else {
 					$this->session->set_flashdata('error', $this->upload->display_errors());
 				}
 			}
+			$this->sendMAIL($data);
 			$this->session->set_flashdata('message', '成功送出留言。（需等待審核，TSJ將盡速處理你的留言，謝謝你。）');
 			$this->index($data['page']);
 		} else {

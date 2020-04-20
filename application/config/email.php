@@ -3,9 +3,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 
 $config['protocol'] = 'smtp';
-$config['smtp_host'] = 'mail.citiar.com';
-$config['smtp_user'] = 'service@citiar.com';
-$config['smtp_pass'] = 'xWu!BUM]F1^R';
+$config['smtp_host'] = 'mail.mybells.tw';
+$config['smtp_user'] = 'service@mybells.tw';
+$config['smtp_pass'] = 'd]ANwmtAa2R8';
 $config['smtp_port'] = '465';
 $config['smtp_crypto'] = 'ssl';
 
