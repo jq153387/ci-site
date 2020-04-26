@@ -506,3 +506,55 @@ address .add li {
     border: none;
     color: #949494;
 }
+.review-repo {
+    padding: 20px;
+}
+
+.review-repo input,
+.review-repo textarea {
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+.review-repo input::placeholder,
+.review-repo textarea::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: rgb(198, 198, 198);
+    opacity: 1; /* Firefox */
+}
+/*style pagination*/
+.page-w {
+    padding: 15px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.pagination {
+    display: inline-block;
+    list-style-type: none;
+}
+
+.pagination li {
+    float: left;
+    margin: 0 5px;
+}
+
+.pagination li a {
+    color: black;
+    padding: 4px 8px;
+    text-decoration: none;
+    color: white;
+    display: block;
+}
+
+.pagination li.active a {
+    background-color: #8a0f22;
+    color: white;
+}
+
+.pagination li:hover:not(.active) {
+    background-color: #ddd;
+}
+
+.pagination li:hover:not(.active) a {
+    color: black;
+}

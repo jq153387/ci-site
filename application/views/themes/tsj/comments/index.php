@@ -36,7 +36,7 @@
                 <div style="padding: 10px 0px" class="g-recaptcha" data-sitekey="6Lf5O-sUAAAAAKtGSE1uSfCGP1PUwZVIa6u_qo3y"></div>
             </li>
         </ul>
-        <div class="send"><button style="padding:3px 15px;">發表</button></div>
+        <div class="send"><button style="padding:3px 15px;cursor:pointer;">發表</button></div>
         <!-- <input type="hidden" name="mail" value="tsj4c@ms59.hinet.net;huang19711127@gmail.com;tim@otaku66.com;wenwen0212@gmail.com"> -->
         <input type="hidden" name="page" value="<?php echo $page_config['page']; ?>">
         </form>
@@ -53,7 +53,7 @@
                         <td width="17" bgcolor="#e7e7e7">&nbsp;</td>
                         <td width="625" height="25" valign="top" bgcolor="#e7e7e7">
                             <font color="#36052E"><?php echo $item['writer'] ?><span style="font-size:8pt;"> ～ 第<span face="Tahoma, Verdana, Arial"><?php echo ($page_config['total_rows'] - $page_config['start']) - $key; ?></span>篇～</span>
-                            </font>&nbsp;&nbsp;&nbsp;&nbsp;<input type="image" name="send" src="<?php echo $base_assets_url; ?>img/res.gif" border="0" alt="回覆留言" onclick="window.location.href='reply.asp?cid=400'">
+
                         </td>
                         <td width="14" valign="top" bgcolor="#e7e7e7">&nbsp;</td>
                     </tr>
@@ -121,6 +121,22 @@
                         </td>
                         <td bgcolor="#e7e7e7">&nbsp;</td>
                     </tr>
+                    <tr bgcolor="#e7e7e7">
+                        <td colspan="3" valign="top">
+                            <form class="review-repo" id="review-re-<?php echo $item["id"]; ?>">
+                                <div class="alert alert-danger print-error-msg" style="display: none"></div>
+                                <input name="review_name" type="text" value="" placeholder="暱稱" style="width: 80px" />
+                                <input name="review_mail" type="text" value="" placeholder="信箱" />
+                                <div style="padding-top: 10px; ">
+                                    <textarea name="review_message" placeholder="留言....." style="width:100%; height:100%; box-sizing:border-box;"></textarea>
+                                </div>
+                                <div style="padding-top: 10px; ">
+                                    <input name="id" type="hidden" value="<?php echo $item['id'] ?>" />
+                                    <button style="padding:3px 15px;cursor:pointer;" onclick="postReview(event,<?php echo $item['id'] ?>)">回覆</button>
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
                     <tr>
                         <td colspan="3" valign="top"><img src="<?php echo $base_assets_url; ?>images/book-tb_03.gif"></td>
                     </tr>
@@ -133,43 +149,5 @@
         <div class="page-w">
             <?php echo $pagination; ?>
         </div>
-        <style>
-            .page-w {
-                padding: 15px 0;
-                display: flex;
-                justify-content: center;
-            }
-
-            .pagination {
-                display: inline-block;
-                list-style-type: none;
-            }
-
-            .pagination li {
-                float: left;
-                margin: 0 5px;
-            }
-
-            .pagination li a {
-                color: black;
-                padding: 4px 8px;
-                text-decoration: none;
-                color: white;
-                display: block;
-            }
-
-            .pagination li.active a {
-                background-color: #8a0f22;
-                color: white;
-            }
-
-            .pagination li:hover:not(.active) {
-                background-color: #ddd;
-            }
-
-            .pagination li:hover:not(.active) a {
-                color: black;
-            }
-        </style>
     </dd>
 </dl>

@@ -83,22 +83,8 @@ class Comments extends My_Controller
 		$responseKeys = json_decode($response, true);
 		if ($this->form_validation->run() == true && $responseKeys["success"]) {
 
-			print_r($_FILES['file']);
-			//upload image
-			// $image_name = '';
+			//print_r($_FILES['file']);
 
-			// if ($_FILES['file']['name'] != "") {
-			// 	$config['upload_path'] = './assets/uploads/';
-			// 	$config['allowed_types'] = 'gif|jpg|png|jpeg|jpe';
-			// 	$this->load->library('upload', $config);
-			// 	if (!$this->upload->do_upload('file')) {
-			// 		$error = array('error' => $this->upload->display_errors());
-			// 	} else {
-			// 		$upload_data = $this->upload->data();
-			// 		$image_name = $upload_data['file_name'];
-			// 		echo 'fff';
-			// 	}
-			// }
 			$data['image'] = "";
 			if (isset($_FILES['file']) && !empty($_FILES['file']['name'])) {
 				$upload_path = "./assets/uploads/";
@@ -109,10 +95,9 @@ class Comments extends My_Controller
 				$config['upload_path'] = $upload_path;
 				$config['allowed_types'] = 'gif|jpg|png|jpeg';
 				$this->load->library('upload', $config);
-				echo "ddd";
+				//echo "ddd";
 				if ($this->upload->do_upload('file')) {
 					//Image Resizing 
-					echo "resiazing";
 					$config1['source_image'] = $this->upload->upload_path . $this->upload->file_name;
 					$config1['new_image'] =  './assets/uploads/' . $filename_new;
 					$config1['maintain_ratio'] = true; //等比
@@ -131,13 +116,29 @@ class Comments extends My_Controller
 			}
 			$this->sendMAIL($data);
 			$this->session->set_flashdata('message', '成功送出留言。（需等待審核，TSJ將盡速處理你的留言，謝謝你。）');
-			$this->index($data['page']);
+			redirect('/guestbook/' . $data['page'], 'refresh');
+			//$this->index($data['page']);
 		} else {
 			if (!$responseKeys["success"]) {
 				$this->session->set_flashdata('error', '抱歉！驗證碼不成功，請勾選我不是機器人。');
 			}
+			//$this->form_validation->resetpostdata();
 			$this->index($data['page']);
-			//redirect('/comments/add', 'refresh');
+		}
+	}
+	public function add_review()
+	{
+		header('Content-Type: application/json');
+		$this->form_validation->set_rules('review_name', '暱稱', 'required');
+		$this->form_validation->set_rules('review_mail', 'Email', 'required|valid_email');
+		$this->form_validation->set_rules('review_message', '留言內容', 'required');
+		if (!$this->form_validation->run()) {
+			$errors = validation_errors();
+			echo json_encode(['error' => $errors]);
+		} else {
+			// To who are you wanting with input value such to insert as
+			echo json_encode(['success' => '成功送出留言。（需等待審核，TSJ將盡速處理你的留言，謝謝你)', 'data' => $_POST]);
+			// Then pass $data  to Modal to insert bla bla!!
 		}
 	}
 	// public function album_photo($slug)
