@@ -35,12 +35,12 @@
 */
 
 // The following values will probably need to be changed.
-$db['default']['username'] = "root";
-$db['default']['password'] = "";
-$db['default']['database'] = "cisite";
+$db['default']['username'] = "b9d3f781ee2a54";
+$db['default']['password'] = "d19ee764";
+$db['default']['database'] = "heroku_b0145b42fb64ef0";
 
 // The following values can probably stay the same.
-$db['default']['hostname'] = "localhost";
+$db['default']['hostname'] = "us-cdbr-east-06.cleardb.net";
 $db['default']['dbdriver'] = "mysqli"; //Updated to latest driver.
 $db['default']['dbprefix'] = "";
 $db['default']['pconnect'] = TRUE;
