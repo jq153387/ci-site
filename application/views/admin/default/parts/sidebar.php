@@ -62,8 +62,8 @@
                     <i class="fa fa-tasks"></i> <span>Menus</span>
                 </a>
             </li> -->
-            <li class="<?php echo ($parent_menu == 'albums') ? 'active' : '' ?>">
-                <a href="<?php echo site_url('admin/albums'); ?>">
+            <li class="<?php echo ($parent_menu == 'album') ? 'active' : '' ?>">
+                <a href="<?php echo site_url('admin/album'); ?>">
                     <i class="fa fa-users"></i> <span>相簿</span>
                 </a>
             </li>

@@ -1,8 +1,9 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import ReactDOM from "react-dom";
+
 import Gallery from "react-photo-gallery";
 import Carousel, { Modal, ModalGateway } from "react-images";
-import { photos } from "./components/photos";
+
 import { Header } from "./components/Header";
 import { Head } from "./components/Head";
 import { colors } from "./components/theme";
@@ -27,7 +28,7 @@ const navButtonStyles = (base) => ({
 function App() {
     const [currentImage, setCurrentImage] = useState(0);
     const [viewerIsOpen, setViewerIsOpen] = useState(false);
-
+    const [photoData, setPhotoData] = useState([]);
     const openLightbox = useCallback((event, { photo, index }) => {
         setCurrentImage(index);
         setViewerIsOpen(true);
@@ -37,19 +38,27 @@ function App() {
         setCurrentImage(0);
         setViewerIsOpen(false);
     };
+    const updateInfo = () => {};
+    const setLoadPhotoData = (props) => {
+        const photos = props.map((item) => {
+            return { src: `/assets/uploads/${item.url}` };
+        });
+        setPhotoData(photos);
+    };
 
     // const CustomHeader = ({ innerProps, isModal }) =>
     //     isModal ? <div {...innerProps}>your component internals</div> : null;
     return (
         <div>
-            <Head />
-            <Gallery photos={photos} onClick={openLightbox} />
+            <Head setLoadPhotoData={setLoadPhotoData} />
+            <Gallery photos={photoData} onClick={openLightbox} />
             <ModalGateway>
                 {viewerIsOpen ? (
                     <Modal
                         allowFullscreen={false}
                         closeOnBackdropClick={false}
                         onClose={closeLightbox}
+                        updateInfo={updateInfo}
                         styles={{
                             blanket: (base) => ({
                                 ...base,
@@ -64,7 +73,7 @@ function App() {
                         <Carousel
                             components={{ Footer: null, Header }}
                             currentIndex={currentImage}
-                            views={photos.map((x) => ({
+                            views={photoData.map((x) => ({
                                 ...x,
                                 srcset: x.srcSet,
                                 caption: x.title,

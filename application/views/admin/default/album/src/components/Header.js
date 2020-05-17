@@ -7,10 +7,10 @@ import { colors } from "./theme";
 import { smallDevice, largeDevice } from "./theme";
 
 export const Header = ({ currentView, modalProps }) => {
-    const { author, caption, createdat, likes } = currentView;
+    const { id, author, caption, createdat, likes } = currentView;
     const { onClose } = modalProps;
 
-    const createdDate = new Date(createdat).toLocaleDateString();
+    //const createdDate = new Date(createdat).toLocaleDateString();
 
     return (
         <div
@@ -35,7 +35,7 @@ export const Header = ({ currentView, modalProps }) => {
             }}
         >
             <div css={{ alignItems: "center", display: "flex ", minWidth: 0 }}>
-                <img
+                {/* <img
                     css={{
                         borderRadius: 3,
                         flexShrink: 0,
@@ -44,11 +44,14 @@ export const Header = ({ currentView, modalProps }) => {
                         width: 32,
                     }}
                     src={author.avatar}
-                />
-                <div css={{ fontSize: "0.85em", minWidth: 0 }}>
-                    <div css={{ color: colors.N100, fontWeight: 500 }}>
-                        {author.name}
-                    </div>
+                /> */}
+                <div
+                    css={{
+                        fontSize: "0.85em",
+                        minWidth: 0,
+                        marginRight: "10px",
+                    }}
+                >
                     <div
                         css={{
                             color: colors.N60,
@@ -59,13 +62,66 @@ export const Header = ({ currentView, modalProps }) => {
                             whiteSpace: "nowrap",
                         }}
                     >
-                        <span>{createdDate}</span>
-                        {caption ? <span> &mdash; {caption}</span> : null}
+                        # {id}
+                    </div>
+                </div>
+                <div
+                    css={{
+                        fontSize: "0.85em",
+                        minWidth: 0,
+                        marginRight: "10px",
+                    }}
+                >
+                    <div
+                        css={{
+                            color: colors.N60,
+                            marginTop: "0.25em",
+                            minWidth: 0,
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                        }}
+                    >
+                        產品分類：
+                        <select>
+                            <option>1</option>
+                            <option>2</option>
+                        </select>
+                    </div>
+                </div>
+                <div css={{ fontSize: "0.85em", minWidth: 0 }}>
+                    {/* <div css={{ color: colors.N100, fontWeight: 500 }}>
+                        {author.name}
+                    </div> */}
+                    <div
+                        css={{
+                            color: colors.N60,
+                            marginTop: "0.25em",
+                            minWidth: 0,
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                        }}
+                    >
+                        創建日期：
+                        <input type="date" value={createdat} />
+                        {/* <span>{createdat}</span> */}
+                        {/* {caption ? <span> &mdash; {caption}</span> : null} */}
                     </div>
                 </div>
             </div>
             <div css={{ alignItems: "center", display: "flex " }}>
-                <Button
+                <div
+                    css={{
+                        cursor: "pointer",
+                    }}
+                    onClick={() => {
+                        confirm("Are you sure?");
+                    }}
+                >
+                    <span className="badge bg-red">delete</span>
+                </div>
+                {/* <Button
                     onClick={() => {
                         console.log("Like clicked!");
                     }}
@@ -87,7 +143,7 @@ export const Header = ({ currentView, modalProps }) => {
                         {likes}
                     </span>
                     <Heart />
-                </Button>
+                </Button> */}
                 <Button
                     onClick={onClose}
                     css={{

@@ -18,12 +18,12 @@ module.exports = (env, options) => {
                 ? "[name].bundle.js"
                 : "[name].[chunkhash].bundle.js",
             path: path.resolve(
-                "../../../../../assets/admin/default/app/albums/",
+                "../../../../../assets/admin/default/app/album/",
                 isDevEnv ? "dist" : "app"
             ),
             publicPath: isDevEnv
-                ? "/assets/admin/default/app/albums/dist/"
-                : "/assets/admin/app/default/albums/app/",
+                ? "/assets/admin/default/app/album/dist/"
+                : "/assets/admin/app/default/album/app/",
         },
         module: {
             rules: [
@@ -52,10 +52,10 @@ module.exports = (env, options) => {
                     loader: "file-loader",
                     query: {
                         name: "[name].[ext]",
-                        outputPath: "/assets/admin/default/app/albums/img",
+                        outputPath: "/assets/admin/default/app/album/img",
                         publicPath: isDevEnv
-                            ? "/assets/admin/default/app/albums/img"
-                            : "/assets/admin/default/app/albums/img",
+                            ? "/assets/admin/default/app/album/img"
+                            : "/assets/admin/default/app/album/img",
                     },
                 },
             ],
