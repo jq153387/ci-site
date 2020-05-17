@@ -81,6 +81,12 @@ class MY_Controller extends CI_Controller
         $this->base_assets_url = 'assets/admin/' . $this->config->item('ci_blog_admin_theme') . '/';
         $this->data['base_assets_url'] = BASE_URI . $this->base_assets_url;
         $this->data['admin_logo'] = $this->config->item('ci_blog_admin_logo');
+        if (empty($this->data['content_title'])) {
+            $this->data['content_title'] = "";
+        }
+        if (empty($this->data['content_title_sub'])) {
+            $this->data['content_title_sub'] = "";
+        }
         //Category status options
         $this->data['category_status'] = array(
             0 => 'Inactive',

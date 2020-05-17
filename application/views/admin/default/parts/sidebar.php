@@ -23,38 +23,53 @@
     <!-- /.search form -->
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu">
-        <li class="active">
-            <a href="<?php echo site_url('admin') ?>">
+        <!-- <li class="active">
+            <a href="<?php //echo site_url('admin') 
+                        ?>">
                 <i class="fa fa-dashboard"></i> <span>Dashboard</span>
             </a>
-        </li>
-        <li class="treeview <?php echo ($parent_menu == 'post') ? 'active' : '' ?>">
+        </li> -->
+        <!-- <li class="treeview <?php //echo ($parent_menu == 'post') ? 'active' : '' 
+                                    ?>">
             <a href="#">
                 <i class="fa fa-edit"></i> <span>Posts</span>
                 <i class="fa fa-angle-left pull-right"></i>
             </a>
-            <ul class="treeview-menu" <?php echo ($parent_menu == 'post') ? 'style="display:block"' : 'style="display:none"' ?>>
-                <li><a href="<?php echo site_url('admin/posts/add') ?>"><i class="fa fa-angle-double-right"></i> New Post</a></li>
-                <li><a href="<?php echo site_url('admin/posts/') ?>"><i class="fa fa-angle-double-right"></i> All Posts</a></li>
-                <?php if (in_array('admin', $current_groups)) : ?>
-                    <li><a href="<?php echo site_url('admin/categories') ?>"><i class="fa fa-angle-double-right"></i> Categories</a></li>
-                <?php endif; ?>
+            <ul class="treeview-menu" <?php //echo ($parent_menu == 'post') ? 'style="display:block"' : 'style="display:none"' 
+                                        ?>>
+                <li><a href="<?php //echo site_url('admin/posts/add') 
+                                ?>"><i class="fa fa-angle-double-right"></i> New Post</a></li>
+                <li><a href="<?php //echo site_url('admin/posts/') 
+                                ?>"><i class="fa fa-angle-double-right"></i> All Posts</a></li>
+                <?php //if (in_array('admin', $current_groups)) : 
+                ?>
+                    <li><a href="<?php //echo site_url('admin/categories') 
+                                    ?>"><i class="fa fa-angle-double-right"></i> Categories</a></li>
+                <?php //endif; 
+                ?>
             </ul>
-        </li>
+        </li> -->
         <?php if (in_array('admin', $current_groups)) : ?>
-            <li class="active">
-                <a href="<?php echo site_url('admin/pages') ?>">
+            <!-- <li class="active">
+                <a href="<?php //echo site_url('admin/pages') 
+                            ?>">
                     <i class="fa fa-file"></i> <span>Static Page</span>
                 </a>
-            </li>
-            <li class="active">
-                <a href="<?php echo site_url('admin/menus') ?>">
+            </li> -->
+            <!-- <li class="active">
+                <a href="<?php //echo site_url('admin/menus') 
+                            ?>">
                     <i class="fa fa-tasks"></i> <span>Menus</span>
+                </a>
+            </li> -->
+            <li class="<?php echo ($parent_menu == 'albums') ? 'active' : '' ?>">
+                <a href="<?php echo site_url('admin/albums'); ?>">
+                    <i class="fa fa-users"></i> <span>相簿</span>
                 </a>
             </li>
             <li class="treeview <?php echo ($parent_menu == 'user') ? 'active' : '' ?>">
                 <a href="#">
-                    <i class="fa fa-users"></i> <span>Users</span>
+                    <i class="fa fa-users"></i> <span>會員管理</span>
                     <i class="fa fa-angle-left pull-right"></i>
                 </a>
                 <ul class="treeview-menu" <?php echo ($parent_menu == 'user') ? 'style="display:block"' : 'style="display:none"' ?>>

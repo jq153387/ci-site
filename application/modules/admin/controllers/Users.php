@@ -11,7 +11,8 @@ class Users extends MY_Controller
 		$this->lang->load('auth');
 		$this->load->model('User');
 		$this->load->model('Group');
-
+		$this->data['content_title'] = "會員管理";
+		$this->data['content_title_sub'] = "";
 		$this->data['parent_menu'] = 'user';
 	}
 
@@ -119,7 +120,11 @@ class Users extends MY_Controller
 		$this->data['groups'] = $this->Group->find_list();
 		$this->load_admin('users/add');
 	}
-
+	// public function profile()
+	// {
+	// 	//echo 'hello';
+	// 	$this->load_admin('users/profile');
+	// }
 	public function edit($id = null)
 	{
 		$this->allow_group_access(array('admin'));
@@ -127,9 +132,9 @@ class Users extends MY_Controller
 			$id = $this->input->post('id');
 		}
 
-		if ($id == $this->current_user['user_id']) {
-			redirect('admin/users/profile');
-		}
+		// if ($id == $this->current_user['user_id']) {
+		// 	redirect('admin/users/profile');
+		// }
 
 		$this->form_validation->set_rules('first_name', 'first name', 'required');
 		$this->form_validation->set_rules('active', 'status', 'required');

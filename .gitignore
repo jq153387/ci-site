@@ -4,6 +4,8 @@
 */cache/*
 */cache/!index.html
 */cache/!.htaccess
+node_modules
+dist
 # application/config/database.php
 vendor
 #assets/uploads/*

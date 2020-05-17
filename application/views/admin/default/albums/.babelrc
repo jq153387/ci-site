@@ -1,0 +1,12 @@
+{
+    "env": {
+        "development": {
+            "compact": false //開發環境中禁用500KB檔案大小錯誤
+        }
+    },
+    "plugins": [
+        "@babel/plugin-proposal-class-properties",
+        "@babel/plugin-syntax-dynamic-import",
+        "emotion"
+    ]
+}

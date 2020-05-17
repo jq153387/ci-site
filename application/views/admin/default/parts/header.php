@@ -42,6 +42,11 @@
                         </li>
                     </ul>
                 </li>
+                <li>
+                    <a href="<?php echo site_url('/') ?>" target="_blank">
+                        <i class="glyphicon glyphicon-new-window" title="預覽網頁"></i>
+                    </a>
+                </li>
             </ul>
         </div>
     </nav>
