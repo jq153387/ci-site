@@ -336,7 +336,7 @@ class Users extends MY_Controller
 			//redirect them back to the admin page
 			// $this->session->set_flashdata('message', $this->ion_auth->messages());
 			$this->session->set_flashdata('message', message_box('Signed up successfully, activation email sent', 'success'));
-			redirect("signin", 'refresh');
+			redirect("a", 'refresh');
 		} else {
 			//display the create user form
 			//set the flash data error message if there is one

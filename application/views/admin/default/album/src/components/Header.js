@@ -8,7 +8,7 @@ import { smallDevice, largeDevice } from "./theme";
 
 export const Header = ({ currentView, modalProps }) => {
     const { id, author, caption, createdat, likes } = currentView;
-    const { onClose } = modalProps;
+    const { onClose, index } = modalProps;
 
     //const createdDate = new Date(createdat).toLocaleDateString();
 

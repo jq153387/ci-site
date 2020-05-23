@@ -160,7 +160,7 @@ class MY_Controller extends CI_Controller
 
         if ($allow_access == false) {
             $this->session->set_flashdata('message', message_box('You are not allowed to access this page!', 'danger'));
-            redirect('signin', 'refresh');
+            redirect('a', 'refresh');
         }
     }
 

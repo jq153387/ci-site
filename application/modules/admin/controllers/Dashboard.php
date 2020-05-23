@@ -1,15 +1,20 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Dashboard extends MY_Controller {
+class Dashboard extends MY_Controller
+{
 
-	function __construct(){
+	function __construct()
+	{
 		parent::__construct();
+		$this->data['content_title'] = "Dashboard";
 	}
 
-	public function index(){
-		redirect('admin/posts');
-		// $this->data['welcome'] = 'Ini adalah halaman admin';
-		// $this->render('admin/dashboard/index');
+	public function index()
+	{
+		//redirect('admin/posts');
+		$this->data['welcome'] = '歡迎來到管理系統';
+		$this->data['page_title'] = "Dashboard";
+		$this->load_admin('/dashboard/index');
 	}
 }

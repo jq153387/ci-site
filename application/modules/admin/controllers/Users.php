@@ -29,7 +29,7 @@ class Users extends MY_Controller
 		if ($activation) {
 			//redirect them to the auth page
 			$this->session->set_flashdata('message', message_box($this->ion_auth->messages(), 'success'));
-			redirect("signin", 'refresh');
+			redirect("a", 'refresh');
 		} else {
 			//redirect them to the forgot password page
 			$this->session->set_flashdata('message', message_box($this->ion_auth->errors(), 'danger'));

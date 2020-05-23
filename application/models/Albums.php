@@ -6,6 +6,7 @@ class Albums extends CI_Model
 
 	var $table = 'product_class';
 	var $product = 'product';
+	var $product_class = 'product_class';
 	var $photo = 'photo';
 	// Constructor
 	function __construct()
@@ -13,7 +14,7 @@ class Albums extends CI_Model
 		parent::__construct();
 	}
 
-	function find($id)
+	function find($id = null)
 	{
 		$this->db->select('product_class.*,product.name as subname,product.id as subname_id,photo.url');
 		$this->db->join('product', 'product.sub_class_id = product_class.id', 'right');
@@ -27,7 +28,7 @@ class Albums extends CI_Model
 		//print_r($this->db->last_query());
 		return $query->result_array();
 	}
-	function find_product($id)
+	function find_product($id = null)
 	{
 		$this->db->select('product.*');
 
@@ -39,7 +40,18 @@ class Albums extends CI_Model
 		//print_r($this->db->last_query());
 		return $query->result_array();
 	}
-	function find_photo($id)
+	function find_product_class($id = null)
+	{
+		$this->db->select('*');
+
+		if ($id != null) {
+			$this->db->where('product_class.id', $id);
+		}
+		$this->db->order_by('.product_class.sort', 'ASC');
+		$query = $this->db->get($this->product_class);
+		return $query->result_array();
+	}
+	function find_photo($id = null)
 	{
 		$this->db->select('photo.*');
 
