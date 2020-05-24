@@ -19,3 +19,19 @@ export const colors = {
     N90: "#172B4D",
     N100: "#091E42",
 };
+export const navButtonStyles = (base) => ({
+    ...base,
+    backgroundColor: "white",
+    boxShadow: "0 1px 6px rgba(0, 0, 0, 0.18)",
+    color: colors.N60,
+
+    "&:hover, &:active": {
+        backgroundColor: "white",
+        color: colors.N100,
+        opacity: 1,
+    },
+    "&:active": {
+        boxShadow: "0 1px 3px rgba(0, 0, 0, 0.14)",
+        transform: "scale(0.96)",
+    },
+});

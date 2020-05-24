@@ -159,7 +159,7 @@ class MY_Controller extends CI_Controller
         $allow_access = !empty($match_group_allowed);
 
         if ($allow_access == false) {
-            $this->session->set_flashdata('message', message_box('You are not allowed to access this page!', 'danger'));
+            $this->session->set_flashdata('message', message_box('您無權訪問此頁面！', 'danger'));
             redirect('a', 'refresh');
         }
     }

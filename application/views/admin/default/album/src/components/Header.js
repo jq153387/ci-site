@@ -8,12 +8,22 @@ import { smallDevice, largeDevice } from "./theme";
 
 export const Header = ({ currentView, modalProps }) => {
     const { id, author, caption, createdat, likes } = currentView;
-    const { onClose, index } = modalProps;
+    // console.log(modalProps);
+    // console.log(currentView);
 
+    const { onClose, index, deleteImage } = modalProps;
+    // const deleteImage = () => {
+    //     const r = confirm("你確定要刪除！");
+    //     if (r == true) {
+    //         modalProps.deleteImage(index);
+    //         alert("檔案刪除完成");
+    //     }
+    // };
     //const createdDate = new Date(createdat).toLocaleDateString();
 
     return (
         <div
+            // onSubmit={this.handleSubmit}
             css={{
                 alignItems: "center",
                 backgroundColor: "white",
@@ -65,7 +75,7 @@ export const Header = ({ currentView, modalProps }) => {
                         # {id}
                     </div>
                 </div>
-                <div
+                {/* <div
                     css={{
                         fontSize: "0.85em",
                         minWidth: 0,
@@ -88,7 +98,7 @@ export const Header = ({ currentView, modalProps }) => {
                             <option>2</option>
                         </select>
                     </div>
-                </div>
+                </div> */}
                 <div css={{ fontSize: "0.85em", minWidth: 0 }}>
                     {/* <div css={{ color: colors.N100, fontWeight: 500 }}>
                         {author.name}
@@ -104,23 +114,29 @@ export const Header = ({ currentView, modalProps }) => {
                         }}
                     >
                         創建日期：
-                        <input type="date" value={createdat} />
-                        {/* <span>{createdat}</span> */}
+                        {/* <input type="text" defaultValue={createdat} /> */}
+                        <span>{createdat}</span>
                         {/* {caption ? <span> &mdash; {caption}</span> : null} */}
                     </div>
                 </div>
             </div>
             <div css={{ alignItems: "center", display: "flex " }}>
-                <div
+                {/* <div
                     css={{
                         cursor: "pointer",
                     }}
-                    onClick={() => {
-                        confirm("Are you sure?");
-                    }}
+                    onClick={handleSubmit}
                 >
-                    <span className="badge bg-red">delete</span>
-                </div>
+                    <span className="badge bg-green">儲存</span>
+                </div>{" "} */}
+                {/* <div
+                    css={{
+                        cursor: "pointer",
+                    }}
+                    onClick={deleteImage}
+                >
+                    <span className="badge bg-red">刪除</span>
+                </div> */}
                 {/* <Button
                     onClick={() => {
                         console.log("Like clicked!");

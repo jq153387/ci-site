@@ -64,7 +64,8 @@ class Album extends MY_Controller
                     "createdat" => $item['created'],
                     "likes" => "0",
                     "id" => $item['id'],
-                    "product_id" => $item['product_id']
+                    "product_id" => $item['product_id'],
+                    "selected" => false
                 ));
             }
         }
@@ -75,10 +76,6 @@ class Album extends MY_Controller
         header('Content-Type: application/json');
         $id = $_POST['id'];
         $find_photo = $this->Albums->find_photo($id);
-
-
-        //$data = array("data" => $this->Albums->find_photo($id));
-        //echo 'hello';
         echo json_encode(array(
             "photo" => $this->album_photoToData($find_photo)
         ));

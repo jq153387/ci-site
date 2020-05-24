@@ -1,15 +1,18 @@
 import React, { useState, useCallback, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import axios from "axios";
 import qs from "qs";
+import { setPhotoDatas } from "../action";
 import { TablePagination } from "@trendmicro/react-paginations";
 // Be sure to include styles at some point, probably during your bootstraping
 import "@trendmicro/react-paginations/dist/react-paginations.css";
 export const Head = (props) => {
-    const [pagination, setPagination] = useState({
+    const initPagination = {
         page: 1,
         pageLength: 20,
         totalRecords: 0,
-    });
+    };
+    const [pagination, setPagination] = useState(initPagination);
     const [photoData, setPhotoData] = useState({
         product: [],
         product_class: [],
@@ -17,7 +20,7 @@ export const Head = (props) => {
     });
     const [productClassID, setProductClassID] = useState(0);
     const [productID, setProductID] = useState(0);
-
+    const dispatch = useDispatch();
     // 相似於 componentDidMount 和 componentDidUpdate:
     useEffect(() => {
         const data = { csrf_tsj: getCookie("csrf_cookie_tsj") };
@@ -36,16 +39,22 @@ export const Head = (props) => {
                     product,
                     product_class,
                 });
-                const pagestart = (pagination.page - 1) * pagination.pageLength; //1-1*20
+                setPagination({
+                    ...pagination,
+                    totalRecords: response.data.photo.length,
+                });
+                const pagestart =
+                    (initPagination.page - 1) * initPagination.pageLength; //1-1*20
                 const pageend =
                     pagestart > 0
-                        ? pagestart + pagination.pageLength
-                        : pagination.pageLength;
-
-                props.setLoadPhotoData(photo.slice(pagestart, pageend));
+                        ? pagestart + initPagination.pageLength
+                        : initPagination.pageLength;
+                const photos = photo.slice(pagestart, pageend);
+                dispatch(setPhotoDatas(photos));
+                props.setLoadPhotoData(photos);
                 props.setLoading(false);
             });
-    }, []);
+    }, [dispatch]);
     const loadPhoto = (id) => {
         const data = { id: id, csrf_tsj: getCookie("csrf_cookie_tsj") };
         axios
@@ -53,15 +62,17 @@ export const Head = (props) => {
             .then((response) => {
                 console.log(response.data);
                 setPagination({
-                    ...pagination,
+                    page: 1,
+                    pageLength: 20,
                     totalRecords: response.data.photo.length,
                 });
                 //資料數
-                const pagestart = (pagination.page - 1) * pagination.pageLength; //1-1*20
+                const pagestart =
+                    (initPagination.page - 1) * initPagination.pageLength; //1-1*20
                 const pageend =
                     pagestart > 0
-                        ? pagestart + pagination.pageLength
-                        : pagination.pageLength;
+                        ? pagestart + initPagination.pageLength
+                        : initPagination.pageLength;
 
                 setPhotoData({ ...photoData, photo: response.data.photo });
 
@@ -69,7 +80,9 @@ export const Head = (props) => {
                 const photo = response.data.photo.filter((item) => {
                     return id == item.product_id;
                 });
-                props.setLoadPhotoData(photo.slice(pagestart, pageend));
+                const photos = photo.slice(pagestart, pageend);
+                dispatch(setPhotoDatas(photos));
+                props.setLoadPhotoData(photos);
                 props.setLoading(false);
             })
             .catch((error) => {
@@ -114,7 +127,7 @@ export const Head = (props) => {
     return (
         <div style={{ marginBottom: "10px" }}>
             <div style={{ display: "flex" }}>
-                <form
+                <div
                     className="form-inline"
                     style={{ flexGrow: "2", paddingTop: "8px" }}
                 >
@@ -144,7 +157,7 @@ export const Head = (props) => {
                     ) : (
                         ""
                     )}
-                </form>
+                </div>
                 <TablePagination
                     type="reduced"
                     page={pagination.page}
@@ -159,9 +172,12 @@ export const Head = (props) => {
                         const pagestart = (page - 1) * pageLength; //1-1*20
                         const pageend =
                             pagestart > 0 ? pagestart + pageLength : pageLength;
-                        props.setLoadPhotoData(
-                            photoData.photo.slice(pagestart, pageend)
+                        const photos = photoData.photo.slice(
+                            pagestart,
+                            pageend
                         );
+                        dispatch(setPhotoDatas(photos));
+                        props.setLoadPhotoData(photos);
                     }}
                     prevPageRenderer={() => <i className="fa fa-angle-left" />}
                     nextPageRenderer={() => <i className="fa fa-angle-right" />}
