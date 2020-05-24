@@ -65,7 +65,7 @@ const SelectedImage = ({
     }
 
     const handleOnClick = (e) => {
-        dispatch(setSelectPhotoData(index));
+        dispatch(setSelectPhotoData(photo.id));
         setIsSelected(!isSelected);
     };
 

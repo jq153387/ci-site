@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import qs from "qs";
 import { setPhotoDatas } from "../action";
@@ -7,6 +7,7 @@ import { TablePagination } from "@trendmicro/react-paginations";
 // Be sure to include styles at some point, probably during your bootstraping
 import "@trendmicro/react-paginations/dist/react-paginations.css";
 export const Head = (props) => {
+    const photo = useSelector((state) => state.photo);
     const initPagination = {
         page: 1,
         pageLength: 20,
@@ -50,7 +51,7 @@ export const Head = (props) => {
                         ? pagestart + initPagination.pageLength
                         : initPagination.pageLength;
                 const photos = photo.slice(pagestart, pageend);
-                dispatch(setPhotoDatas(photos));
+                dispatch(setPhotoDatas(photo));
                 props.setLoadPhotoData(photos);
                 props.setLoading(false);
             });
@@ -81,7 +82,7 @@ export const Head = (props) => {
                     return id == item.product_id;
                 });
                 const photos = photo.slice(pagestart, pageend);
-                dispatch(setPhotoDatas(photos));
+                dispatch(setPhotoDatas(photo));
                 props.setLoadPhotoData(photos);
                 props.setLoading(false);
             })
@@ -172,11 +173,7 @@ export const Head = (props) => {
                         const pagestart = (page - 1) * pageLength; //1-1*20
                         const pageend =
                             pagestart > 0 ? pagestart + pageLength : pageLength;
-                        const photos = photoData.photo.slice(
-                            pagestart,
-                            pageend
-                        );
-                        dispatch(setPhotoDatas(photos));
+                        const photos = photo.slice(pagestart, pageend);
                         props.setLoadPhotoData(photos);
                     }}
                     prevPageRenderer={() => <i className="fa fa-angle-left" />}

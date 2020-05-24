@@ -12,15 +12,19 @@ export default (state = initState, action) => {
             };
         }
         case SETSELECTPHOTO: {
+            //尋找key
+            const index = state.photo.findIndex((i) => {
+                return i.id === action.id;
+            });
             return {
                 ...state,
                 photo: [
-                    ...state.photo.slice(0, action.index),
+                    ...state.photo.slice(0, index),
                     {
-                        ...state.photo[action.index],
-                        selected: !state.photo[action.index].selected,
+                        ...state.photo[index],
+                        selected: !state.photo[index].selected,
                     },
-                    ...state.photo.slice(action.index + 1),
+                    ...state.photo.slice(index + 1),
                 ],
             };
         }

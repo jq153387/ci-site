@@ -6,7 +6,7 @@ export const setPhotoDatas = (data) => ({
     type: SETPHOTODATA,
     data,
 });
-export const setSelectPhotoData = (index) => ({
+export const setSelectPhotoData = (id) => ({
     type: SETSELECTPHOTO,
-    index,
+    id,
 });

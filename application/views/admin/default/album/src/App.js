@@ -16,7 +16,6 @@ export default function App() {
     const [editIsOpen, setEditIsOpen] = useState(false);
     const [photoData, setPhotoData] = useState([]);
     // 使用 useSelector 取出 Store 保管的 state
-    const photo = useSelector((state) => state.photo);
     const [selectAll, setSelectAll] = useState(false);
     const openLightbox = useCallback((event, { photo, index }) => {
         setCurrentImage(index);
@@ -37,25 +36,22 @@ export default function App() {
     const toggleSelectAll = () => {
         setSelectAll(!selectAll);
     };
-    const imageRenderer = useCallback(
-        ({ index, left, top, key, photo }) => {
-            // console.log(photo);
+    const imageRenderer = ({ index, left, top, key, photo }) => {
+        // console.log(photo);
 
-            //setSelectPhotoID()
-            return (
-                <SelectedImage
-                    selected={selectAll ? true : false}
-                    key={key}
-                    margin={"2px"}
-                    index={index}
-                    photo={photo}
-                    left={left}
-                    top={top}
-                />
-            );
-        },
-        [selectAll]
-    );
+        //setSelectPhotoID()
+        return (
+            <SelectedImage
+                selected={photo.selected}
+                key={key}
+                margin={"2px"}
+                index={index}
+                photo={photo}
+                left={left}
+                top={top}
+            />
+        );
+    };
     // const CustomHeader = ({ innerProps, isModal }) =>
     //     isModal ? <div {...innerProps}>your component internals</div> : null;
     return (
@@ -109,7 +105,7 @@ export default function App() {
                         )}
                     </div>
                     <Gallery
-                        photos={photo}
+                        photos={photoData}
                         onClick={openLightbox}
                         renderImage={editIsOpen ? imageRenderer : undefined}
                     />
@@ -134,7 +130,7 @@ export default function App() {
                                 <Carousel
                                     components={{ Footer: null, Header }}
                                     currentIndex={currentImage}
-                                    views={photo.map((x) => ({
+                                    views={photoData.map((x) => ({
                                         ...x,
                                         srcset: x.srcSet,
                                         caption: x.title,
