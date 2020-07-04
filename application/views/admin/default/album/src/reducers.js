@@ -1,6 +1,9 @@
-import { SETPHOTODATA, SETSELECTPHOTO } from "./action";
+import { SETPHOTODATA, SETSELECTPHOTO, SETPAGINATION } from "./action";
 const initState = {
+    product_class: "",
+    product: "",
     photo: [],
+    pagination: { page: 1, pageLength: 20, totalRecords: 0 },
 };
 
 export default (state = initState, action) => {
@@ -8,7 +11,16 @@ export default (state = initState, action) => {
         case SETPHOTODATA: {
             return {
                 ...state,
-                photo: action.data,
+                photo: action.data.photo,
+                product_class: action.data.product_class,
+                product: action.data.product,
+                pagination: action.data.pagination,
+            };
+        }
+        case SETPAGINATION: {
+            return {
+                ...state,
+                pagination: action.data,
             };
         }
         case SETSELECTPHOTO: {

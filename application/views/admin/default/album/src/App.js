@@ -8,6 +8,7 @@ import { Head } from "./components/Head";
 import { colors } from "./components/theme";
 import { smallDevice, largeDevice, navButtonStyles } from "./components/theme";
 import LoadComponent from "./components/Loading";
+import { Addimage, Deleteimage } from "./components/Addimage";
 import "@babel/polyfill/noConflict";
 
 export default function App() {
@@ -33,9 +34,9 @@ export default function App() {
         // });
         setPhotoData(data);
     };
-    const toggleSelectAll = () => {
-        setSelectAll(!selectAll);
-    };
+    // const toggleSelectAll = () => {
+    //     setSelectAll(!selectAll);
+    // };
     const imageRenderer = ({ index, left, top, key, photo }) => {
         // console.log(photo);
 
@@ -64,9 +65,10 @@ export default function App() {
                     新人謝卡{" "}
                 </h3> */}
                         <div style={{ flexGrow: "2" }}>
-                            <button className="btn btn-success" href="#">
-                                新增
-                            </button>{" "}
+                            <Addimage
+                                setLoadPhotoData={setLoadPhotoData}
+                                setLoading={setLoading}
+                            />{" "}
                             {!editIsOpen ? (
                                 <button
                                     className="btn btn-primary"
@@ -86,19 +88,17 @@ export default function App() {
                         </div>
                         {editIsOpen ? (
                             <div style={{ flexGrow: "0" }}>
-                                <button
+                                {/* <button
                                     className="btn btn-default"
                                     onClick={toggleSelectAll}
                                 >
                                     全選
-                                </button>
+                                </button> */}
                                 &nbsp;
-                                <button
-                                    className="btn btn-danger"
-                                    onClick={toggleSelectAll}
-                                >
-                                    刪除
-                                </button>
+                                <Deleteimage
+                                    setLoadPhotoData={setLoadPhotoData}
+                                    setLoading={setLoading}
+                                />
                             </div>
                         ) : (
                             ""

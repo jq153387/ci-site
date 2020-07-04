@@ -2,18 +2,19 @@ import React, { useState, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import qs from "qs";
-import { setPhotoDatas } from "../action";
+import { setPhotoDatas, setPagination } from "../action";
 import { TablePagination } from "@trendmicro/react-paginations";
 // Be sure to include styles at some point, probably during your bootstraping
 import "@trendmicro/react-paginations/dist/react-paginations.css";
 export const Head = (props) => {
     const photo = useSelector((state) => state.photo);
-    const initPagination = {
-        page: 1,
-        pageLength: 20,
-        totalRecords: 0,
-    };
-    const [pagination, setPagination] = useState(initPagination);
+    // const initPagination = {
+    //     page: 1,
+    //     pageLength: 20,
+    //     totalRecords: 0,
+    // };
+    const paginations = useSelector((state) => state.pagination);
+    // const [pagination, setPagination] = useState(initPagination);
     const [photoData, setPhotoData] = useState({
         product: [],
         product_class: [],
@@ -31,7 +32,6 @@ export const Head = (props) => {
                 const photo = response.data.photo;
                 const product = response.data.product;
                 const product_class = response.data.product_class;
-                console.log(response.data);
                 setProductClassID(response.data.setProductClassID);
                 setProductID(response.data.setProductID);
                 setPhotoData({
@@ -40,40 +40,47 @@ export const Head = (props) => {
                     product,
                     product_class,
                 });
-                setPagination({
-                    ...pagination,
+                const pagination = {
+                    ...paginations,
                     totalRecords: response.data.photo.length,
-                });
+                };
                 const pagestart =
-                    (initPagination.page - 1) * initPagination.pageLength; //1-1*20
+                    (paginations.page - 1) * paginations.pageLength; //1-1*20
                 const pageend =
                     pagestart > 0
-                        ? pagestart + initPagination.pageLength
-                        : initPagination.pageLength;
+                        ? pagestart + paginations.pageLength
+                        : paginations.pageLength;
                 const photos = photo.slice(pagestart, pageend);
-                dispatch(setPhotoDatas(photo));
+                dispatch(
+                    setPhotoDatas({
+                        photo,
+                        product: response.data.setProductID,
+                        product_class: response.data.setProductClassID,
+                        pagination,
+                    })
+                );
                 props.setLoadPhotoData(photos);
                 props.setLoading(false);
             });
     }, [dispatch]);
-    const loadPhoto = (id) => {
+    const loadPhoto = (id, pclassid) => {
         const data = { id: id, csrf_tsj: getCookie("csrf_cookie_tsj") };
         axios
             .post("album/album_photo", qs.stringify(data))
             .then((response) => {
                 console.log(response.data);
-                setPagination({
+                const pagination = {
                     page: 1,
                     pageLength: 20,
                     totalRecords: response.data.photo.length,
-                });
+                };
                 //資料數
                 const pagestart =
-                    (initPagination.page - 1) * initPagination.pageLength; //1-1*20
+                    (paginations.page - 1) * paginations.pageLength; //1-1*20
                 const pageend =
                     pagestart > 0
-                        ? pagestart + initPagination.pageLength
-                        : initPagination.pageLength;
+                        ? pagestart + paginations.pageLength
+                        : paginations.pageLength;
 
                 setPhotoData({ ...photoData, photo: response.data.photo });
 
@@ -82,7 +89,14 @@ export const Head = (props) => {
                     return id == item.product_id;
                 });
                 const photos = photo.slice(pagestart, pageend);
-                dispatch(setPhotoDatas(photo));
+                dispatch(
+                    setPhotoDatas({
+                        photo,
+                        product: id,
+                        product_class: pclassid,
+                        pagination,
+                    })
+                );
                 props.setLoadPhotoData(photos);
                 props.setLoading(false);
             })
@@ -115,7 +129,7 @@ export const Head = (props) => {
         });
         setProductID(filtered[0].id);
         props.setLoading(true);
-        loadPhoto(filtered[0].id);
+        loadPhoto(filtered[0].id, value);
     };
     const setPhotosData = (value) => {
         const photo = photoData.photo.filter((item) => {
@@ -123,7 +137,7 @@ export const Head = (props) => {
         });
         setProductID(value);
         props.setLoading(true);
-        loadPhoto(value);
+        loadPhoto(value, productClassID);
     };
     return (
         <div style={{ marginBottom: "10px" }}>
@@ -161,15 +175,17 @@ export const Head = (props) => {
                 </div>
                 <TablePagination
                     type="reduced"
-                    page={pagination.page}
-                    pageLength={pagination.pageLength}
-                    totalRecords={pagination.totalRecords}
+                    page={paginations.page}
+                    pageLength={paginations.pageLength}
+                    totalRecords={paginations.totalRecords}
                     onPageChange={({ page, pageLength }) => {
-                        setPagination({
-                            ...pagination,
-                            page,
-                            pageLength,
-                        });
+                        dispatch(
+                            setPagination({
+                                ...paginations,
+                                page,
+                                pageLength,
+                            })
+                        );
                         const pagestart = (page - 1) * pageLength; //1-1*20
                         const pageend =
                             pagestart > 0 ? pagestart + pageLength : pageLength;

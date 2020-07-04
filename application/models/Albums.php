@@ -64,12 +64,14 @@ class Albums extends CI_Model
 		return $query->result_array();
 	}
 
-	// function create($post)
-	// {
-	// 	$post['slug'] = url_title($post['title'], '-', true);
-	// 	$post['body'] = trim(preg_replace('/\s\s+/', ' ', $post['body']));
-	// 	$this->db->insert($this->table, $post);
-	// }
+	function create($post)
+	{
+		$data['product_id'] = $post['product'];
+		$data['url'] = $post['image'];
+		$date = new DateTime(null, new DateTimeZone('Asia/Taipei'));
+		$data['created'] = $date->format('Y-m-d H:i:s');
+		$this->db->insert($this->photo, $data);
+	}
 
 	// function update($post, $id)
 	// {
@@ -79,11 +81,13 @@ class Albums extends CI_Model
 	// 	$this->db->update($this->table, $post);
 	// }
 
-	// function delete($id)
-	// {
-	// 	$this->db->where('id', $id);
-	// 	$this->db->delete($this->table);
-	// }
+	function delete($data)
+	{
+		if (!empty($data)) {
+			$this->db->where_in('id', $data);
+			$this->db->delete($this->photo);
+		}
+	}
 
 	// function find_by_id($id)
 	// {
