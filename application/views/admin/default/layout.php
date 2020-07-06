@@ -143,7 +143,11 @@
             })
         })
     </script>
-
+    <script>
+        $('input').on('ifChecked', function(event) {
+            alert(event.type + ' callback');
+        });
+    </script>
 </body>
 
 </html>

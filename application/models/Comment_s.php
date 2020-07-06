@@ -48,7 +48,12 @@ class Comment_s extends CI_Model
 		//print_r($this->db->last_query());
 		return $query->result_array();
 	}
-
+	function com_dispaly($post)
+	{
+		$data['published'] = $post['published'];
+		$this->db->where('id', $post['id']);
+		$this->db->update($this->table, $data);
+	}
 	// function create($post)
 	// {
 	// 	$post['slug'] = url_title($post['title'], '-', true);

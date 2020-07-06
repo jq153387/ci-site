@@ -67,6 +67,11 @@
                     <i class="fa fa-users"></i> <span>相簿</span>
                 </a>
             </li>
+            <li class="<?php echo ($parent_menu == 'comments') ? 'active' : '' ?>">
+                <a href="<?php echo site_url('admin/comments'); ?>">
+                    <i class="fa fa-users"></i> <span>好友推薦</span>
+                </a>
+            </li>
             <li class="treeview <?php echo ($parent_menu == 'user') ? 'active' : '' ?>">
                 <a href="#">
                     <i class="fa fa-users"></i> <span>會員管理</span>
