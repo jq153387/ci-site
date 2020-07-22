@@ -8,6 +8,7 @@ class Comments extends My_Controller
 	{
 		parent::__construct();
 		$this->load->model('Comment_s');
+		$this->load->model('Setting');
 	}
 
 	public function index($page = null)
@@ -53,7 +54,10 @@ class Comments extends My_Controller
 		$this->email->from('service@mybells.tw', 'tsj-diamond.com');
 		// $to_mails = array('tsj4c@ms59.hinet.net', 'huang19711127@gmail.com', 'tim@otaku66.com', 'wenwen0212@gmail.com');
 		// $this->email->to($to_mails);
-		$this->email->to('jq153387@gmail.com');
+		$data['username'] = $data['writer'];
+		$to_mails = $this->Setting->findByKey("email_contact");
+		//echo $to_mails;
+		$this->email->to($to_mails);
 		$this->email->subject('等待審核:TSJ好友推薦 ' . $data['username'] . ' 留言');
 		$send_content = array(
 			$data['username'] . '留言於TSJ好友推薦，等待您至網站後台審核結果。',
@@ -72,19 +76,20 @@ class Comments extends My_Controller
 	}
 	public function add()
 	{
-		$this->form_validation->set_rules('username', '暱稱', 'trim|required|xss_clean');
+
+		$this->form_validation->set_rules('writer', '暱稱', 'trim|required|xss_clean');
 		$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
 		$data = $_POST;
-		//google captch
-		$captcha = $_POST['g-recaptcha-response'];
-		$secretKey = "6Lf5O-sUAAAAABkMn_iWIcv1AG_zpzoz40jvzYK2";
-		$url = 'https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode($secretKey) .  '&response=' . urlencode($captcha);
-		$response = file_get_contents($url);
-		$responseKeys = json_decode($response, true);
-		if ($this->form_validation->run() == true && $responseKeys["success"]) {
+
+		if ($this->form_validation->run() == true) {
 
 			//print_r($_FILES['file']);
-
+			if ($data["id"] != "") {
+				//print_r($data);
+				$this->Comment_s->update($data);
+			} else {
+				$data["id"] = $this->Comment_s->create_review($data);
+			}
 			$data['image'] = "";
 			if (isset($_FILES['file']) && !empty($_FILES['file']['name'])) {
 				$upload_path = "./assets/uploads/";
@@ -110,20 +115,30 @@ class Comments extends My_Controller
 					unlink($config1['source_image']); //remove source image
 					$data['image'] = $filename_new;
 					$data['image_url'] = $config1['new_image'];
+					$this->Comment_s->create_photo($data);
 				} else {
+					header('Content-Type: application/json');
 					$this->session->set_flashdata('error', $this->upload->display_errors());
 				}
 			}
 			$this->sendMAIL($data);
-			$this->session->set_flashdata('message', '成功送出留言。（需等待審核，TSJ將盡速處理你的留言，謝謝你。）');
-			redirect('/guestbook/' . $data['page'], 'refresh');
-			//$this->index($data['page']);
-		} else {
-			if (!$responseKeys["success"]) {
-				$this->session->set_flashdata('error', '抱歉！驗證碼不成功，請勾選我不是機器人。');
+
+			if ($data['page'] != "") {
+				$this->session->set_flashdata('message', '成功送出留言。（需等待審核，TSJ將盡速處理你的留言，謝謝你。）');
+				redirect('/guestbook/' . $data['page'], 'refresh');
+				$this->index($data['page']);
+			} else {
+				header('Content-Type: application/json');
+				echo json_encode(['success' => '成功送出留言。（需等待審核，TSJ將盡速處理你的留言，謝謝你)', 'data' => $_POST]);
 			}
-			//$this->form_validation->resetpostdata();
-			$this->index($data['page']);
+		} else {
+			if ($data['page'] != "") {
+				$this->index($data['page']);
+			} else {
+				header('Content-Type: application/json');
+				$errors = validation_errors();
+				echo json_encode(['error' => $errors]);
+			}
 		}
 	}
 	public function add_review()
@@ -136,6 +151,7 @@ class Comments extends My_Controller
 			$errors = validation_errors();
 			echo json_encode(['error' => $errors]);
 		} else {
+
 			// To who are you wanting with input value such to insert as
 			echo json_encode(['success' => '成功送出留言。（需等待審核，TSJ將盡速處理你的留言，謝謝你)', 'data' => $_POST]);
 			// Then pass $data  to Modal to insert bla bla!!

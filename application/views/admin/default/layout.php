@@ -144,9 +144,58 @@
         })
     </script>
     <script>
-        $('input').on('ifChecked', function(event) {
-            alert(event.type + ' callback');
+        function getCookie(name) {
+            var arr = document.cookie.match(
+                new RegExp("(^| )" + name + "=([^;]*)(;|$)")
+            );
+            if (arr != null) return unescape(arr[2]);
+            return null;
+        }
+        $('input.discomm-check').on('ifToggled', function(event) {
+            // alert(event.type + ' callback');
+            console.log(event.currentTarget.checked);
+            var published = (event.currentTarget.checked) ? "1" : "0"
+            if (published == "1") {
+                var checked = $("#published_value").val('1');
+            } else {
+                var checked = $("#published_value").val('0');
+            }
+            // console.log(published);
+            var query = "id=" + $(this).data("id") + "&published=" + published + "&csrf_tsj=" + getCookie("csrf_cookie_tsj");
+            $.ajax({
+                url: "/admin/comments/com_dispaly",
+                type: "POST",
+                data: query,
+                dataType: "json",
+                success: function(response) {
+                    // Update CSRF hash
+                    console.log(response);
+
+                },
+            });
         });
+    </script>
+    <script>
+        function editFordata(data) {
+            if (data.id != undefined) {
+                $('#writer').val(data.writer);
+                $('#c-content').val(data.content);
+                $('#id').val(data.id);
+                if (data.published == "1") {
+                    $("select[name=published]").val("1");
+
+                } else {
+                    $("select[name=published]").val("0");
+                }
+                $('#myModal').modal('show');
+            } else {
+                $('#writer').val("");
+                $('#c-content').val("");
+                $('#id').val("");
+                $("select[name=published]").val("0");
+                $('#myModal').modal('show');
+            }
+        }
     </script>
 </body>
 

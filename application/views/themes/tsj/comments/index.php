@@ -16,8 +16,8 @@
         <ul class="cont-list" style="width:650px">
             <li>
                 <b><span style="color:red;">*</span> 暱稱</b>
-                <input name="username" type="text" id="username" size="30" value="<?php echo set_value('username'); ?>">
-                <div class="from_error"><?php echo form_error('username'); ?></div>
+                <input name="writer" type="text" id="writer" size="30" value="<?php echo set_value('writer'); ?>">
+                <div class="from_error"><?php echo form_error('writer'); ?></div>
             </li>
             <li>
                 <b><span style="color:red;">*</span> 信箱</b>
@@ -31,14 +31,17 @@
                 <b>上傳圖片</b>
                 <input name="file" type="file" id="image_id">
             </li>
-            <li>
+            <!-- <li>
                 <b>驗證碼</b>
                 <div style="padding: 10px 0px" class="g-recaptcha" data-sitekey="6Lf5O-sUAAAAAKtGSE1uSfCGP1PUwZVIa6u_qo3y"></div>
-            </li>
+            </li> -->
         </ul>
         <div class="send"><button style="padding:3px 15px;cursor:pointer;">發表</button></div>
         <!-- <input type="hidden" name="mail" value="tsj4c@ms59.hinet.net;huang19711127@gmail.com;tim@otaku66.com;wenwen0212@gmail.com"> -->
-        <input type="hidden" name="page" value="<?php echo $page_config['page']; ?>">
+        <input type="hidden" name="id" value="">
+        <input type="hidden" name="published" value="0">
+        <input type="hidden" name="class_id" value="">
+        <input type="hidden" name="page" value="<?php echo ($page_config['page'] == "") ? "1" : $page_config['page']; ?>">
         </form>
     </dd>
     <!--body-->
@@ -111,7 +114,7 @@
                                             <?php endif; ?>
                                         </tr>
                                         <tr>
-                                            <td align="right" valign="bottom" bgcolor="#e7e7e7" class="g-date"><?php echo $review['news_date']; ?></td>
+                                            <td align="right" valign="bottom" bgcolor="#e7e7e7" class="g-date" colspan="2"><?php echo $review['news_date']; ?></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -125,13 +128,20 @@
                         <td colspan="3" valign="top">
                             <form class="review-repo" id="review-re-<?php echo $item["id"]; ?>">
                                 <div class="alert alert-danger print-error-msg" style="display: none"></div>
-                                <input name="review_name" type="text" value="" placeholder="暱稱" style="width: 80px" />
-                                <input name="review_mail" type="text" value="" placeholder="信箱" />
+                                <input name="writer" type="text" value="" placeholder="暱稱" style="width: 80px" />
+                                <input name="email" type="text" value="" placeholder="信箱" />
                                 <div style="padding-top: 10px; ">
-                                    <textarea name="review_message" placeholder="留言....." style="width:100%; height:100%; box-sizing:border-box;"></textarea>
+                                    <textarea name="content" placeholder="留言....." style="width:100%; height:100%; box-sizing:border-box;"></textarea>
+                                </div>
+                                <div class="form-group" style="padding-top: 10px; ">
+                                    <input type="file" id="file" name="file" accept=".jpg,.gif,.png">
+                                    <p class="help-block" style="padding-top: 5px; ">支援圖片格式.jpg .png .gif</p>
                                 </div>
                                 <div style="padding-top: 10px; ">
-                                    <input name="id" type="hidden" value="<?php echo $item['id'] ?>" />
+                                    <input name="id" type="hidden" value="" />
+                                    <input name="class_id" type="hidden" value="<?php echo $item['id'] ?>" />
+                                    <input type="hidden" name="page" value="">
+                                    <input type="hidden" name="published" value="0">
                                     <button style="padding:3px 15px;cursor:pointer;" onclick="postReview(event,<?php echo $item['id'] ?>)">回覆</button>
                                 </div>
                             </form>

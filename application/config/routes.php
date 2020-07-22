@@ -88,3 +88,4 @@ $route['api/album_photo/(:num)'] = 'album/album_photo/$1';
 $route['guestbook'] = 'comments/index';
 $route['guestbook/(:num)'] = 'comments/index/$1';
 $route['admin/comments/(:num)'] = 'admin/comments/index/$1';
+$route['admin/comments/edit/(:num)'] = 'admin/comments/edit/$1';

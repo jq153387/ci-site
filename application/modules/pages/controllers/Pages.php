@@ -23,6 +23,7 @@ class Pages extends MY_Controller
 	{
 		parent::__construct();
 		//$this->load->model('Post');
+		$this->load->model('Setting');
 	}
 	public function about()
 	{
@@ -55,8 +56,9 @@ class Pages extends MY_Controller
 		$responseKeys = json_decode($response, true);
 		if ($this->form_validation->run() == true && $responseKeys["success"]) {
 			//以下設置Email內容
-			$this->email->from('service@citiar.com', 'tsj-diamond.com');
-			$this->email->to('jq153387@gmail.com');
+			$this->email->from('service@mybells.tw', 'tsj-diamond.com');
+			$to_mails = $this->Setting->findByKey("email_contact");
+			$this->email->to($to_mails);
 			$this->email->subject('TSJ聯絡我們 ' . $data['username'] . ' 資訊');
 			$send_content = array(
 				'姓名:' . $data['username'],

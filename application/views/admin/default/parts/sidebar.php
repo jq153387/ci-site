@@ -83,8 +83,9 @@
                 </ul>
             </li>
             <li class="active">
-                <a href="<?php echo site_url('admin/settings') ?>">
-                    <i class="fa fa-gear"></i> <span>General Setting</span>
+                <a href="<?php echo site_url('admin/settings')
+                            ?>">
+                    <i class="fa fa-gear"></i> <span>設定</span>
                 </a>
             </li>
         <?php endif; ?>

@@ -1,12 +1,19 @@
 function postReview(e, id) {
     e.preventDefault();
     var this_id = "#review-re-" + id;
-    var query =
-        $(this_id).serialize() + "&csrf_tsj=" + getCookie("csrf_cookie_tsj");
+    var form = $(this_id)[0];
+    console.log(form);
+    var formData = new FormData(form);
+    formData.append("csrf_tsj", getCookie("csrf_cookie_tsj"));
+    // var query =
+    //     $(this_id).serialize() + "&csrf_tsj=" + getCookie("csrf_cookie_tsj");
     $.ajax({
-        url: "/comments/add_review",
+        url: "/comments/add",
         type: "POST",
-        data: query,
+        contentType: false,
+        cache: false,
+        processData: false,
+        data: formData,
         dataType: "json",
         success: function (response) {
             // Update CSRF hash
