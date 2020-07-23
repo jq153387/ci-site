@@ -23,7 +23,7 @@ module.exports = (env, options) => {
             ),
             publicPath: isDevEnv
                 ? "/assets/admin/default/app/album/dist/"
-                : "/assets/admin/app/default/album/app/",
+                : "/assets/admin/default/app/album/app/",
         },
         module: {
             rules: [

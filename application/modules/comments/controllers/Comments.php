@@ -80,8 +80,17 @@ class Comments extends My_Controller
 		$this->form_validation->set_rules('writer', '暱稱', 'trim|required|xss_clean');
 		$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
 		$data = $_POST;
-
-		if ($this->form_validation->run() == true) {
+		//google captch
+		if (isset($_POST['g-recaptcha-response'])) {
+			$captcha = $_POST['g-recaptcha-response'];
+			$secretKey = "6Lf5O-sUAAAAABkMn_iWIcv1AG_zpzoz40jvzYK2";
+			$url = 'https://www.google.com/recaptcha/api/siteverify?secret=' . urlencode($secretKey) .  '&response=' . urlencode($captcha);
+			$response = file_get_contents($url);
+			$responseKeys = json_decode($response, true);
+		} else {
+			$responseKeys["success"] = "true";
+		}
+		if ($this->form_validation->run() == true && $responseKeys["success"]) {
 
 			//print_r($_FILES['file']);
 			if ($data["id"] != "") {

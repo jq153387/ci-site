@@ -53,7 +53,7 @@
         var BASE_URI = '<?php echo BASE_URI; ?>';
     </script>
     <!-- jQuery 2.0.2 -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
     <!-- jQuery UI 1.10.3 -->
     <script src="<?php echo $base_assets_url; ?>js/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
     <!-- Bootstrap -->

@@ -32,7 +32,7 @@ class Comments extends My_Controller
 		//echo "kjoijoij" . $this->uri->segment(3);
 		$this->data['comments'] = $this->Comment_s->find_comments($config['per_page'], $config['start'], false);
 		foreach ($this->data['comments'] as $key => $item) {
-			$review = $this->Comment_s->find_review($item['id']);
+			$review = $this->Comment_s->find_review($item['id'], false);
 			$this->data['comments'][$key]['review_count'] = count($review);
 		}
 		$this->data['page_config'] = $config;

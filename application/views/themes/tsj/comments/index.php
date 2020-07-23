@@ -31,10 +31,10 @@
                 <b>上傳圖片</b>
                 <input name="file" type="file" id="image_id">
             </li>
-            <!-- <li>
+            <li>
                 <b>驗證碼</b>
                 <div style="padding: 10px 0px" class="g-recaptcha" data-sitekey="6Lf5O-sUAAAAAKtGSE1uSfCGP1PUwZVIa6u_qo3y"></div>
-            </li> -->
+            </li>
         </ul>
         <div class="send"><button style="padding:3px 15px;cursor:pointer;">發表</button></div>
         <!-- <input type="hidden" name="mail" value="tsj4c@ms59.hinet.net;huang19711127@gmail.com;tim@otaku66.com;wenwen0212@gmail.com"> -->

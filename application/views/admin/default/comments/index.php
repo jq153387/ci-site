@@ -12,13 +12,13 @@
                     <tr>
 
                         <th style="width: 10px">#</th>
-                        <th style="width: 700px">推薦內容</th>
+                        <th style="width: 600px">推薦內容</th>
                         <th>留言數量</th>
                         <th>發布者</th>
                         <th>創建時間</th>
                         <th>顯示狀態</th>
                         <!-- <th>ID</th> -->
-                        <th style="width: 10px"></th>
+                        <th style="width: 120px"></th>
 
                     </tr>
                     <?php if (!empty($comments)) : ?>
